@@ -46,7 +46,7 @@ export default function Navbar() {
               <Code2 className="h-4 w-4 text-foreground" strokeWidth={1.5} />
             </div>
             <span className="font-inter text-base font-semibold tracking-tight text-foreground">
-              StudioDev
+              Becee
             </span>
           </Link>
 

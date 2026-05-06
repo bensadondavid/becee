@@ -69,7 +69,7 @@ export default function ServicesOverview() {
 
               <Link
                 href="/services"
-                className="inline-flex items-center gap-1.5 font-inter text-xs font-medium uppercase tracking-wide text-foreground transition-colors hover:text-accent"
+                className="absolute left-[10%] bottom-[4%] inline-flex items-center gap-1.5 font-inter text-xs font-medium uppercase tracking-wide text-foreground transition-colors hover:text-accent"
               >
                 En savoir plus
                 <ArrowRight className="h-3 w-3" strokeWidth={1.5} />

@@ -37,7 +37,7 @@ export default function Footer() {
               <div className="flex h-7 w-7 items-center justify-center rounded border border-foreground" />
 
               <span className="font-inter text-sm font-semibold tracking-tight text-foreground">
-                StudioDev
+                Becee
               </span>
             </Link>
 
@@ -84,7 +84,7 @@ export default function Footer() {
 
         <div className="mt-16 flex flex-col items-center justify-between gap-3 border-t border-[#E8E8E8] pt-8 sm:flex-row">
           <p className="font-inter text-xs text-muted-foreground">
-            © {currentYear} StudioDev — SASU. Tous droits réservés.
+            © {currentYear} Becee — SASU. Tous droits réservés.
           </p>
 
           <p className="font-inter text-xs text-muted-foreground">
