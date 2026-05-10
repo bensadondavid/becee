@@ -24,17 +24,10 @@ export default function CTABanner() {
         <div className="flex flex-col justify-center gap-3 sm:flex-row">
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 rounded-sm bg-foreground px-7 py-3 font-inter text-sm font-medium text-white transition-colors hover:bg-foreground/90"
+            className="flex justify-center items-center gap-2 rounded-lg bg-foreground px-7 py-3 font-inter text-sm font-medium text-white transition-colors hover:bg-foreground/90"
           >
             Demander un devis gratuit
             <ArrowRight className="h-4 w-4" strokeWidth={1.5} />
-          </Link>
-
-          <Link
-            href="/portfolio"
-            className="inline-flex items-center gap-2 rounded-sm border border-[#E8E8E8] px-7 py-3 font-inter text-sm font-medium text-foreground transition-colors hover:border-foreground/30"
-          >
-            Explorer nos réalisations
           </Link>
         </div>
       </div>

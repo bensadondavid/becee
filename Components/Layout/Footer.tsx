@@ -8,7 +8,6 @@ const footerLinks = {
     { label: 'Application métier', path: '/services' },
   ],
   Agence: [
-    { label: 'Portfolio', path: '/portfolio' },
     { label: 'À propos', path: '/a-propos' },
     { label: 'Contact', path: '/contact' },
   ],
@@ -18,12 +17,6 @@ const footerLinks = {
     { label: 'CGV', path: '/cgv' },
   ],
 };
-
-const socialLinks = [
-  { Icon: FaLinkedin, label: 'LinkedIn', href: '#' },
-  { Icon: FaGithub, label: 'GitHub', href: '#' },
-  { Icon: FaTwitter, label: 'Twitter', href: '#' },
-];
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -46,18 +39,6 @@ export default function Footer() {
               pour les PME françaises.
             </p>
 
-            <div className="flex gap-3">
-              {socialLinks.map(({ Icon, label, href }) => (
-                <a
-                  key={label}
-                  href={href}
-                  aria-label={label}
-                  className="flex h-8 w-8 items-center justify-center rounded-sm border border-[#E8E8E8] text-muted-foreground transition-colors hover:border-foreground hover:text-foreground"
-                >
-                  <Icon className="h-3.5 w-3.5" />
-                </a>
-              ))}
-            </div>
           </div>
 
           {Object.entries(footerLinks).map(([category, links]) => (
@@ -85,10 +66,6 @@ export default function Footer() {
         <div className="mt-16 flex flex-col items-center justify-between gap-3 border-t border-[#E8E8E8] pt-8 sm:flex-row">
           <p className="font-inter text-xs text-muted-foreground">
             © {currentYear} Becee — SASU. Tous droits réservés.
-          </p>
-
-          <p className="font-inter text-xs text-muted-foreground">
-            Conçu et développé avec passion en France 🇫🇷
           </p>
         </div>
       </div>

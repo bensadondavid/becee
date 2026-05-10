@@ -27,13 +27,7 @@ export default function Hero() {
 
       <div className="relative mx-auto w-full max-w-6xl px-6 py-20 lg:px-8 lg:py-28">
         <div className="grid items-start gap-16 lg:grid-cols-2">
-          <div className="animate-fade-up">
-            <div className="mb-10 inline-flex items-center gap-2 rounded-full border border-[#E8E8E8] px-3 py-1.5">
-              <div className="h-1.5 w-1.5 rounded-full bg-accent" />
-              <span className="font-inter text-xs text-muted-foreground">
-                Disponibles pour de nouveaux projets
-              </span>
-            </div>
+          <div className="animate-fade-up w-full">
 
             <h1 className="mb-7 font-playfair text-5xl leading-[1.08] font-medium tracking-tight text-foreground sm:text-6xl lg:text-[4rem]">
               Votre activité mérite un site à la hauteur de vos ambitions
@@ -43,24 +37,13 @@ export default function Hero() {
               Nous concevons des solutions web sur mesure qui transforment vos visiteurs en clients.
               Sites vitrines, applications métier, systèmes de réservation — tout est pensé pour votre ROI.
             </p>
-
-            <div className="flex flex-wrap gap-3">
-              <Link
+            <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 rounded-sm bg-foreground px-6 py-3 font-inter text-sm font-medium text-white transition-colors hover:bg-foreground/90"
+                className="flex flex-row justify-center items-center gap-2 rounded-lg bg-foreground w-full py-3 font-inter text-sm font-medium text-white transition-colors hover:bg-foreground/90 hover:gap-1.5"
               >
                 Démarrer un projet
                 <ArrowRight className="h-4 w-4" strokeWidth={1.5} />
               </Link>
-
-              <Link
-                href="/portfolio"
-                className="inline-flex items-center gap-2 rounded-sm border border-[#E8E8E8] px-6 py-3 font-inter text-sm font-medium text-foreground transition-colors hover:border-foreground/30"
-              >
-                <Play className="h-3.5 w-3.5" strokeWidth={1.5} />
-                Voir nos réalisations
-              </Link>
-            </div>
           </div>
 
           <div className="hidden animate-fade-left lg:block">

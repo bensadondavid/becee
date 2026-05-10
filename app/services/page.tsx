@@ -12,7 +12,6 @@ const tiers = [
     icon: Globe,
     name: 'Vitrine',
     subtitle: 'Site vitrine professionnel',
-    price: 'À partir de 1 500 €',
     description:
       'Le site idéal pour présenter votre activité, gagner en crédibilité et attirer de nouveaux clients via Google.',
     features: [
@@ -31,7 +30,6 @@ const tiers = [
     icon: CalendarCheck,
     name: 'Réservation',
     subtitle: 'Site + module de réservation',
-    price: 'À partir de 3 000 €',
     description:
       'Automatisez vos prises de rendez-vous avec un système de réservation en ligne intégré à votre site.',
     features: [
@@ -50,7 +48,6 @@ const tiers = [
     icon: Layers,
     name: 'Application Métier',
     subtitle: 'Application web sur mesure',
-    price: 'Sur devis',
     description:
       'Une application web conçue spécifiquement pour digitaliser et optimiser vos processus métier.',
     features: [
@@ -103,7 +100,6 @@ export default function ServicesPage() {
 
                   <h3 className="font-playfair text-2xl font-medium text-foreground">{tier.name}</h3>
                   <p className="font-inter text-xs text-muted-foreground mt-1 mb-3 tracking-wide">{tier.subtitle}</p>
-                  <div className="font-playfair text-lg font-medium text-accent mb-4">{tier.price}</div>
                   <p className="font-inter text-sm text-muted-foreground leading-relaxed mb-6">{tier.description}</p>
 
                   <ul className="space-y-3 mb-8 flex-1">
@@ -117,7 +113,7 @@ export default function ServicesPage() {
 
                   <Link
                     href="/contact"
-                    className={`w-full py-2.5 font-inter text-sm font-medium rounded-sm transition-colors flex items-center justify-center gap-2 ${
+                    className={`w-full py-2.5 font-inter text-sm font-medium rounded-lg transition-colors flex items-center justify-center gap-2 ${
                       tier.popular
                         ? 'bg-foreground text-white hover:bg-foreground/90'
                         : 'border border-[#E8E8E8] text-foreground hover:border-foreground/30'

@@ -32,10 +32,11 @@ type FormState = {
   email: string;
   phone: string;
   projectType: string;
+  entreprise: string;
   message: string;
 };
 
-const EMPTY_FORM: FormState = { name: '', email: '', phone: '', projectType: '', message: '' };
+const EMPTY_FORM: FormState = { name: '', email: '', phone: '', projectType: '', entreprise: "", message: '' };
 
 export default function ContactPage() {
   const [form, setForm] = useState<FormState>(EMPTY_FORM);
@@ -99,6 +100,11 @@ export default function ContactPage() {
                       </SelectContent>
                     </Select>
                   </div>
+                </div>
+
+                 <div className="space-y-1.5">
+                  <Label htmlFor="entreprise" className="font-inter text-xs font-medium tracking-wide text-foreground">Entreprise</Label>
+                    <Input id="entreprise" type="text" value={form.entreprise} onChange={(e) => updateField('entreprise', e.target.value)} placeholder="Becee" className="font-inter text-sm bg-[#FAFAFA] border-[#E8E8E8] h-10 rounded-sm" />
                 </div>
 
                 <div className="space-y-1.5">
