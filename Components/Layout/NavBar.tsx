@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, Code2 } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Image from 'next/image';
@@ -27,11 +27,6 @@ export default function Navbar() {
 
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
-
-  useEffect(() => {
-    setMobileOpen(false);
-  }, [pathname]);
-
   return (
     <nav
       className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${
@@ -107,6 +102,7 @@ export default function Navbar() {
                   <Link
                     key={link.path}
                     href={link.path}
+                    onClick={() => setMobileOpen(false)}
                     className={`block py-2.5 font-inter text-sm transition-colors ${
                       isActive
                         ? 'font-medium text-foreground'
@@ -121,6 +117,7 @@ export default function Navbar() {
               <div className="pt-3">
                 <Link
                   href="/contact"
+                  onClick={() => setMobileOpen(false)}
                   className="block w-full rounded-sm border border-foreground px-5 py-2.5 text-center font-inter text-sm font-medium text-foreground transition-colors hover:bg-foreground hover:text-white"
                 >
                   Démarrer un projet

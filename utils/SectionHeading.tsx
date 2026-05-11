@@ -1,5 +1,18 @@
+import type { ReactNode } from 'react';
 
-export default function SectionHeading({ badge, title, description, center = true }) {
+type SectionHeadingProps = {
+  badge?: ReactNode;
+  title: ReactNode;
+  description?: ReactNode;
+  center?: boolean;
+};
+
+export default function SectionHeading({
+  badge,
+  title,
+  description,
+  center = true,
+}: SectionHeadingProps) {
   return (
     <div
       className={`${center ? 'text-center mx-auto' : ''} max-w-2xl mb-14`}

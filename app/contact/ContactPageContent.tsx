@@ -52,8 +52,6 @@ export default function ContactPageContent() {
         body: JSON.stringify({ ...form, _hp: '' })
       });
       if (!response.ok) {
-        const data = await response.json()
-        console.log(data?.error)
         toast.error('Une erreur est survenue, veuillez réessayer');
         return;
       }

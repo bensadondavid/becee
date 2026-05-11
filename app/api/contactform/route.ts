@@ -32,6 +32,9 @@ export async function POST(req: NextRequest) {
 
   const { name, email, phone, projectType, entreprise, message } = result.data;
 
+  const esc = (s: string) =>
+    s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+
   try {
     await transporter.sendMail({
       from: `"Becee Contact" <${process.env.SMTP_USER}>`,
@@ -39,13 +42,13 @@ export async function POST(req: NextRequest) {
       replyTo: email,
       subject: `Nouveau contact — ${projectType || "Autre"} — ${name}`,
       html: `
-        <p><strong>Nom :</strong> ${name}</p>
-        <p><strong>Email :</strong> ${email}</p>
-        <p><strong>Téléphone :</strong> ${phone || "—"}</p>
-        <p><strong>Entreprise :</strong> ${entreprise || "—"}</p>
-        <p><strong>Type de projet :</strong> ${projectType || "—"}</p>
+        <p><strong>Nom :</strong> ${esc(name)}</p>
+        <p><strong>Email :</strong> ${esc(email)}</p>
+        <p><strong>Téléphone :</strong> ${phone ? esc(phone) : "—"}</p>
+        <p><strong>Entreprise :</strong> ${entreprise ? esc(entreprise) : "—"}</p>
+        <p><strong>Type de projet :</strong> ${projectType ? esc(projectType) : "—"}</p>
         <hr />
-        <p>${message.replace(/\n/g, "<br />")}</p>
+        <p>${esc(message).replace(/\n/g, "<br />")}</p>
       `,
     });
 

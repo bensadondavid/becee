@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Plus, Minus } from 'lucide-react';
 
 interface FaqItemProps {
@@ -12,7 +12,24 @@ interface FaqItemProps {
 
 export default function FaqItem({ faq }: FaqItemProps) {
   const [open, setOpen] = useState(false);
+  const [contentHeight, setContentHeight] = useState(0);
   const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open || !contentRef.current) {
+      return;
+    }
+
+    const element = contentRef.current;
+    const updateHeight = () => setContentHeight(element.scrollHeight);
+
+    updateHeight();
+
+    const observer = new ResizeObserver(updateHeight);
+    observer.observe(element);
+
+    return () => observer.disconnect();
+  }, [open, faq.answer]);
 
   return (
     <div className="border-b border-[#E8E8E8]">
@@ -30,7 +47,7 @@ export default function FaqItem({ faq }: FaqItemProps) {
       <div
         ref={contentRef}
         style={{
-          maxHeight: open ? (contentRef.current?.scrollHeight ?? 0) + 'px' : '0px',
+          maxHeight: open ? `${contentHeight}px` : '0px',
           opacity: open ? 1 : 0,
           overflow: 'hidden',
           transition: 'max-height 0.35s ease, opacity 0.3s ease',

@@ -23,14 +23,32 @@ export const metadata: Metadata = {
     default: 'Becee — Agence web sur mesure',
     template: '%s | Becee',
   },
-  description: 'Agence de développement web sur mesure pour PME et indépendants. Sites vitrines, réservation en ligne, applications métier. Devis gratuit sous 24h.',
+  icons: '/logo-becee-onglet.png', 
+  description:
+    'Agence de développement web sur mesure pour PME et indépendants. Sites vitrines, réservation en ligne, applications métier. Devis gratuit sous 24h.',
   openGraph: {
     type: 'website',
     locale: 'fr_FR',
+    url: '/',
     siteName: 'Becee',
+    title: 'Becee — Agence web sur mesure',
+    description:
+      'Agence de développement web sur mesure pour PME et indépendants. Sites vitrines, réservation en ligne, applications métier. Devis gratuit sous 24h.',
+    images: [
+      {
+        url: '/logo-becee-og.png',
+        width: 1200,
+        height: 630,
+        alt: 'Becee — Agence web sur mesure',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
+    title: 'Becee — Agence web sur mesure',
+    description:
+      'Agence de développement web sur mesure pour PME et indépendants. Sites vitrines, réservation en ligne, applications métier. Devis gratuit sous 24h.',
+    images: ['/logo-becee-og.png'],
   },
 };
 

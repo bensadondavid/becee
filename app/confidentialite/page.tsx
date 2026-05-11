@@ -34,7 +34,7 @@ const sections = [
   {
     title: 'Base légale',
     content: [
-      "Le traitement de vos données repose sur votre consentement (art. 6.1.a du RGPD) lorsque vous soumettez le formulaire de contact, et sur l'intérêt légitime de StudioDev pour le suivi des relations commerciales (art. 6.1.f du RGPD).",
+      "Le traitement de vos données repose sur votre consentement (art. 6.1.a du RGPD) lorsque vous soumettez le formulaire de contact, et sur l'intérêt légitime de Becee pour le suivi des relations commerciales (art. 6.1.f du RGPD).",
     ],
   },
   {
