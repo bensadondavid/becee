@@ -11,6 +11,7 @@ import SectionHeading from '@/utils/SectionHeading';
 import AnimatedCard from '@/utils/AnimatedCard';
 import GridBackground from '@/utils/GridBackground';
 
+
 const contactInfo = [
   { icon: Mail, label: 'Email', value: 'contact@becee.fr', href: 'mailto:contact@becee.fr' },
   { icon: Phone, label: 'Téléphone', value: '+33 1 23 45 67 89', href: 'tel:+33123456789' },
@@ -41,14 +42,28 @@ export default function ContactPageContent() {
   const [form, setForm] = useState<FormState>(EMPTY_FORM);
   const [sending, setSending] = useState(false);
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSending(true);
-    setTimeout(() => {
-      setSending(false);
+    try {
+      const response = await fetch('/api/contactform', {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...form, _hp: '' })
+      });
+      if (!response.ok) {
+        const data = await response.json()
+        console.log(data?.error)
+        toast.error('Une erreur est survenue, veuillez réessayer');
+        return;
+      }
       toast.success('Merci ! Notre équipe vous répondra sous 24h.');
       setForm(EMPTY_FORM);
-    }, 1200);
+    } catch {
+      toast.error('Une erreur est survenue, veuillez réessayer');
+    } finally {
+      setSending(false);
+    }
   }
 
   function updateField(field: keyof FormState, value: string) {
@@ -69,6 +84,7 @@ export default function ContactPageContent() {
           <div className="grid lg:grid-cols-5 gap-10 lg:gap-14">
             <AnimatedCard className="lg:col-span-3">
               <form onSubmit={handleSubmit} className="border border-[#E8E8E8] rounded p-7 sm:p-8 bg-white space-y-5">
+                <input type="text" name="_hp" value="" onChange={() => {}} tabIndex={-1} aria-hidden="true" className="hidden" />
                 <div className="grid sm:grid-cols-2 gap-5">
                   <div className="space-y-1.5">
                     <Label htmlFor="name" className="font-inter text-xs font-medium tracking-wide text-foreground">Nom complet</Label>
