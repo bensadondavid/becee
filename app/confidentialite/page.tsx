@@ -1,4 +1,10 @@
-// app/confidentialite/page.tsx
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Politique de confidentialité',
+  description: "Politique de confidentialité de Becee : données collectées, finalités du traitement, vos droits RGPD et durées de conservation.",
+  robots: { index: false, follow: false },
+};
 
 import GridBackground from '@/utils/GridBackground';
 import SectionHeading from '@/utils/SectionHeading';
@@ -8,8 +14,8 @@ const sections = [
   {
     title: 'Responsable du traitement',
     content: [
-      'StudioDev SAS — 12 rue de la Paix, 75001 Paris',
-      'Email : contact@studiodev.fr',
+      'Becee SAS — 78 rue de Paris, 95350 Saint Brice Sous Forêt, France',
+      'Email : contact@becee.fr',
     ],
   },
   {
@@ -47,7 +53,7 @@ const sections = [
     title: 'Vos droits',
     content: [
       "Conformément au RGPD, vous disposez des droits suivants sur vos données : droit d'accès, de rectification, d'effacement, de limitation du traitement, à la portabilité et d'opposition.",
-      "Pour exercer ces droits, contactez-nous à : contact@studiodev.fr. Vous disposez également du droit d'introduire une réclamation auprès de la CNIL (www.cnil.fr).",
+      "Pour exercer ces droits, contactez-nous à : contact@becee.fr. Vous disposez également du droit d'introduire une réclamation auprès de la CNIL (www.cnil.fr).",
     ],
   },
 ];

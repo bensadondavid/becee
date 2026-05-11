@@ -1,4 +1,14 @@
-// app/services/page.tsx  (ou pages/services.tsx si tu es en Pages Router)
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Nos services',
+  description: 'Découvrez nos offres web sur mesure : site vitrine, module de réservation en ligne et application métier. Développement professionnel sans template. Devis gratuit.',
+  openGraph: {
+    title: 'Nos services | Becee',
+    description: 'Sites vitrines, réservation en ligne et applications métier sur mesure. Devis gratuit sous 24h.',
+    url: '/services',
+  },
+};
 
 import Link from 'next/link';
 import { Globe, CalendarCheck, Layers, Check, ArrowRight } from 'lucide-react';
@@ -16,13 +26,11 @@ const tiers = [
       'Le site idéal pour présenter votre activité, gagner en crédibilité et attirer de nouveaux clients via Google.',
     features: [
       'Design sur mesure et responsive',
-      "Jusqu'à 5 pages",
       'Optimisation SEO complète',
       'Formulaire de contact',
       'Intégration Google Maps',
       'Hébergement et nom de domaine',
       'Formation à la prise en main',
-      'Support technique 3 mois',
     ],
     popular: false,
   },
@@ -40,7 +48,6 @@ const tiers = [
       'Tableau de bord de gestion',
       'Gestion multi-services',
       'Synchronisation Google Calendar',
-      'Support technique 6 mois',
     ],
     popular: true,
   },
@@ -58,7 +65,6 @@ const tiers = [
       'API RESTful complète',
       'Gestion des droits utilisateurs',
       'Intégrations tierces (CRM, ERP…)',
-      'Support et maintenance sur mesure',
     ],
     popular: false,
   },

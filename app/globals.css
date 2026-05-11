@@ -13,12 +13,12 @@
   --color-secondary-foreground: hsl(0 0% 4%);
   --color-muted: hsl(0 0% 96%);
   --color-muted-foreground: hsl(0 0% 45%);
-  --color-accent: hsl(38 65% 58%);
+  --color-accent: #1E5BFF;
   --color-accent-foreground: hsl(0 0% 100%);
   --color-destructive: hsl(0 84.2% 60.2%);
   --color-border: hsl(0 0% 90%);
   --color-input: hsl(0 0% 90%);
-  --color-ring: hsl(38 65% 58%);
+  --color-ring: #1E5BFF;
 
   --font-playfair: 'Playfair Display', Georgia, serif;
   --font-inter: 'Inter', system-ui, sans-serif;

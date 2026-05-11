@@ -1,4 +1,10 @@
-// app/cgv/page.tsx
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Conditions Générales de Vente',
+  description: 'Conditions générales de vente de Becee : modalités de prestation, tarifs, délais de livraison et droits des parties.',
+  robots: { index: false, follow: false },
+};
 
 import GridBackground from '@/utils/GridBackground';
 import SectionHeading from '@/utils/SectionHeading';
@@ -8,7 +14,7 @@ const sections = [
   {
     title: 'Objet',
     content: [
-      "Les présentes Conditions Générales de Vente (CGV) régissent les relations contractuelles entre StudioDev SAS (ci-après « le Prestataire ») et tout client professionnel (ci-après « le Client ») souhaitant bénéficier de ses services de création web.",
+      "Les présentes Conditions Générales de Vente (CGV) régissent les relations contractuelles entre Becee SAS (ci-après « le Prestataire ») et tout client professionnel (ci-après « le Client ») souhaitant bénéficier de ses services de création web.",
     ],
   },
   {
@@ -76,7 +82,7 @@ export default function CGVPage() {
           <SectionHeading
             badge="CGV"
             title="Conditions Générales de Vente"
-            description="Ces conditions régissent l'ensemble des prestations réalisées par StudioDev pour ses clients professionnels."
+            description="Ces conditions régissent l'ensemble des prestations réalisées par Becee pour ses clients professionnels."
           />
           <div className="space-y-4">
             {sections.map((section, i) => (

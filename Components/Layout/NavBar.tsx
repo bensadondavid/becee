@@ -5,10 +5,12 @@ import { usePathname } from 'next/navigation';
 import { Menu, X, Code2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import Image from 'next/image';
 
 const navLinks = [
   { label: 'Services', path: '/services' },
   { label: 'À propos', path: '/a-propos' },
+  { label: 'FAQ', path: '/faq' },
   { label: 'Contact', path: '/contact' },
 ];
 
@@ -41,12 +43,7 @@ export default function Navbar() {
       <div className="mx-auto max-w-6xl px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded border border-foreground">
-              <Code2 className="h-4 w-4 text-foreground" strokeWidth={1.5} />
-            </div>
-            <span className="font-inter text-base font-semibold tracking-tight text-foreground">
-              Becee
-            </span>
+            <Image src='/logo-becee.png' height={80} width={80} alt='logo becee' />
           </Link>
 
           <div className="hidden items-center gap-8 lg:flex">

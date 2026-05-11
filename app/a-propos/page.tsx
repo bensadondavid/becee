@@ -1,4 +1,14 @@
-// app/about/page.tsx
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'À propos',
+  description: 'Découvrez Becee : notre histoire, nos valeurs et notre méthodologie. Une agence web dédiée à la réussite digitale des PME et indépendants français.',
+  openGraph: {
+    title: 'À propos | Becee',
+    description: 'Notre histoire, nos valeurs et notre méthodologie au service de votre projet web.',
+    url: '/a-propos',
+  },
+};
 
 import { Target, Heart, Shield, Lightbulb, Search, PenTool, Code2, Rocket, Palette, BarChart3, Headphones } from 'lucide-react';
 import SectionHeading from '@/utils/SectionHeading';
@@ -35,7 +45,7 @@ const stats = [
 ];
 
 const story = [
-  "StudioDev est né d'un constat simple : trop de PME et de commerçants en France se contentent de solutions digitales génériques qui ne reflètent ni leur identité ni leurs ambitions.",
+  "Becee est né d'un constat simple : trop de PME et de commerçants en France se contentent de solutions digitales génériques qui ne reflètent ni leur identité ni leurs ambitions.",
   "Notre équipe s'est constituée autour d'une mission commune — rendre accessible aux entreprises françaises le niveau de qualité technique habituellement réservé aux grandes structures. Nous combinons expertise en développement web moderne, sensibilité design et connaissance approfondie du tissu économique local.",
   "Aujourd'hui, notre agence accompagne des dizaines d'entreprises dans leur transformation digitale, du site vitrine à l'application métier complexe. Chaque projet est une nouvelle opportunité de prouver qu'un investissement digital bien pensé génère des résultats concrets et mesurables.",
 ];

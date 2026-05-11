@@ -39,7 +39,7 @@ export default function Hero() {
             </p>
             <Link
                 href="/contact"
-                className="flex flex-row justify-center items-center gap-2 rounded-lg bg-foreground w-full py-3 font-inter text-sm font-medium text-white transition-colors hover:bg-foreground/90 hover:gap-1.5"
+                className="flex flex-row justify-center items-center gap-2 rounded-lg border bg-accent w-full py-3 font-inter text-sm font-medium text-white transition-colors hover:bg-white hover:border-accent hover:text-accent hover:gap-1.5"
               >
                 Démarrer un projet
                 <ArrowRight className="h-4 w-4" strokeWidth={1.5} />

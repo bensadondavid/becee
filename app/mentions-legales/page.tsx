@@ -1,4 +1,10 @@
-// app/mentions-legales/page.tsx
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Mentions légales',
+  description: "Mentions légales du site Becee : éditeur, hébergeur, propriété intellectuelle et droit applicable.",
+  robots: { index: false, follow: false },
+};
 
 import GridBackground from '@/utils/GridBackground';
 import SectionHeading from '@/utils/SectionHeading';
@@ -6,15 +12,15 @@ import AnimatedCard from '@/utils/AnimatedCard';
 
 const sections = [
   {
-    title: 'Éditeur du site',
+    title: 'Editeur du Site',
     content: [
-      'Raison sociale : StudioDev SAS',
-      'Adresse : 12 rue de la Paix, 75001 Paris, France',
-      'Email : contact@studiodev.fr',
+      'Raison sociale : Becee SAS',
+      'Adresse : 78 rue de Paris, 95350 Saint Brice Sous Forêt, France',
+      'Email : contact@becee.fr',
       'Téléphone : +33 1 23 45 67 89',
       'SIRET : 000 000 000 00000',
       'Capital social : 1 000 €',
-      'Directeur de la publication : Jean Dupont',
+      'Directeur de la publication : David Bensadon',
     ],
   },
   {
@@ -28,15 +34,15 @@ const sections = [
   {
     title: 'Propriété intellectuelle',
     content: [
-      "L'ensemble du contenu de ce site (textes, images, graphismes, logo, icônes, sons, logiciels…) est la propriété exclusive de StudioDev, à l'exception des marques, logos ou contenus appartenant à d'autres sociétés partenaires ou auteurs.",
-      "Toute reproduction, distribution, modification, adaptation, retransmission ou publication, même partielle, de ces différents éléments est strictement interdite sans l'accord exprès par écrit de StudioDev.",
+      "L'ensemble du contenu de ce site (textes, images, graphismes, logo, icônes, sons, logiciels…) est la propriété exclusive de Becee, à l'exception des marques, logos ou contenus appartenant à d'autres sociétés partenaires ou auteurs.",
+      "Toute reproduction, distribution, modification, adaptation, retransmission ou publication, même partielle, de ces différents éléments est strictement interdite sans l'accord exprès par écrit de Becee.",
     ],
   },
   {
     title: 'Limitation de responsabilité',
     content: [
       "Les informations contenues sur ce site sont aussi précises que possible et le site est périodiquement remis à jour, mais peut toutefois contenir des inexactitudes, des omissions ou des lacunes.",
-      "StudioDev ne pourra être tenu responsable des dommages directs ou indirects causés au matériel de l'utilisateur lors de l'accès au site, et résultant de l'utilisation d'un matériel ne répondant pas aux spécifications techniques requises.",
+      "Becee ne pourra être tenu responsable des dommages directs ou indirects causés au matériel de l'utilisateur lors de l'accès au site, et résultant de l'utilisation d'un matériel ne répondant pas aux spécifications techniques requises.",
     ],
   },
   {

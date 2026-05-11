@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { FaLinkedin, FaGithub, FaTwitter } from 'react-icons/fa';
+import Image from 'next/image';
 
 const footerLinks = {
   Services: [
@@ -9,6 +9,7 @@ const footerLinks = {
   ],
   Agence: [
     { label: 'À propos', path: '/a-propos' },
+    { label: 'FAQ', path: '/faq' },
     { label: 'Contact', path: '/contact' },
   ],
   Légal: [
@@ -27,11 +28,7 @@ export default function Footer() {
         <div className="grid grid-cols-2 gap-10 md:grid-cols-4">
           <div className="col-span-2 md:col-span-1">
             <Link href="/" className="mb-5 flex items-center gap-2.5">
-              <div className="flex h-7 w-7 items-center justify-center rounded border border-foreground" />
-
-              <span className="font-inter text-sm font-semibold tracking-tight text-foreground">
-                Becee
-              </span>
+              <Image src='/logo-becee.png' height={80} width={80} alt='logo becee' />
             </Link>
 
             <p className="mb-6 font-inter text-sm leading-relaxed text-muted-foreground">
@@ -65,7 +62,7 @@ export default function Footer() {
 
         <div className="mt-16 flex flex-col items-center justify-between gap-3 border-t border-[#E8E8E8] pt-8 sm:flex-row">
           <p className="font-inter text-xs text-muted-foreground">
-            © {currentYear} Becee — SASU. Tous droits réservés.
+            © {currentYear} Becee — SAS. Tous droits réservés.
           </p>
         </div>
       </div>
