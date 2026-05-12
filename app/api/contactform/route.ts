@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
         <p><strong>Entreprise :</strong> ${entreprise ? esc(entreprise) : "—"}</p>
         <p><strong>Type de projet :</strong> ${projectType ? esc(projectType) : "—"}</p>
         <hr />
-        <p>${esc(message).replace(/\n/g, "<br />")}</p>
+        <p>${esc(message ?? "").replace(/\n/g, "<br />")}</p>
       `,
     });
 

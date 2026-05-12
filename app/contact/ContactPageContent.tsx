@@ -85,19 +85,19 @@ export default function ContactPageContent() {
                 <input type="text" name="_hp" value="" onChange={() => {}} tabIndex={-1} aria-hidden="true" className="hidden" />
                 <div className="grid sm:grid-cols-2 gap-5">
                   <div className="space-y-1.5">
-                    <Label htmlFor="name" className="font-inter text-xs font-medium tracking-wide text-foreground">Nom complet</Label>
+                    <Label htmlFor="name" className="font-inter text-xs font-medium tracking-wide text-foreground">Nom complet*</Label>
                     <Input id="name" value={form.name} onChange={(e) => updateField('name', e.target.value)}  required className="font-inter text-sm bg-[#FAFAFA] border-[#E8E8E8] h-10 rounded-sm focus:border-foreground/30" />
                   </div>
                   <div className="space-y-1.5">
-                    <Label htmlFor="email" className="font-inter text-xs font-medium tracking-wide text-foreground">Email</Label>
+                    <Label htmlFor="email" className="font-inter text-xs font-medium tracking-wide text-foreground">Email*</Label>
                     <Input id="email" type="email" value={form.email} onChange={(e) => updateField('email', e.target.value)} required className="font-inter text-sm bg-[#FAFAFA] border-[#E8E8E8] h-10 rounded-sm focus:border-foreground/30" />
                   </div>
                 </div>
 
                 <div className="grid sm:grid-cols-2 gap-5">
                   <div className="space-y-1.5">
-                    <Label htmlFor="phone" className="font-inter text-xs font-medium tracking-wide text-foreground">Téléphone</Label>
-                    <Input id="phone" type="tel" value={form.phone} onChange={(e) => updateField('phone', e.target.value)}  className="font-inter text-sm bg-[#FAFAFA] border-[#E8E8E8] h-10 rounded-sm" />
+                    <Label htmlFor="phone" className="font-inter text-xs font-medium tracking-wide text-foreground">Téléphone*</Label>
+                    <Input id="phone" type="tel" value={form.phone} onChange={(e) => updateField('phone', e.target.value)} required className="font-inter text-sm bg-[#FAFAFA] border-[#E8E8E8] h-10 rounded-sm" />
                   </div>
                   <div className="space-y-1.5">
                     <Label className="font-inter text-xs font-medium tracking-wide text-foreground">Type de projet</Label>
@@ -121,7 +121,7 @@ export default function ContactPageContent() {
 
                 <div className="space-y-1.5">
                   <Label htmlFor="message" className="font-inter text-xs font-medium tracking-wide text-foreground">Votre message</Label>
-                  <Textarea id="message" value={form.message} onChange={(e) => updateField('message', e.target.value)} placeholder="Décrivez votre projet, vos besoins et vos objectifs..." rows={5} required className="font-inter text-sm bg-[#FAFAFA] border-[#E8E8E8] rounded-sm resize-none" />
+                  <Textarea id="message" value={form.message} onChange={(e) => updateField('message', e.target.value)} placeholder="Décrivez votre projet, vos besoins et vos objectifs..." rows={5} className="font-inter text-sm bg-[#FAFAFA] border-[#E8E8E8] rounded-sm resize-none" />
                 </div>
 
                 <button
