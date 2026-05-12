@@ -4,12 +4,12 @@ import { z } from "zod";
 
 const schema = z.object({
   name: z.string().min(2).max(100),
-  email: z.email(),
-  phone: z.string().max(20).optional(),
+  email: z.string().email(),
+  phone: z.string().max(20),
   projectType: z.enum(['vitrine', 'reservation', 'application', 'e-commerce', 'autre', '']).optional(),
   entreprise: z.string().max(100).optional(),
-  message: z.string().min(10).max(5000),
-  _hp: z.string().max(0, "bot detected"),
+  message: z.string().max(5000).optional(),
+  _hp: z.literal('').optional(),
 });
 
 const transporter = nodemailer.createTransport({
