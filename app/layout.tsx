@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Inter } from 'next/font/google'
 import "./globals.css";
-import Navbar from "@/Components/Layout/NavBar";
-import Footer from "@/Components/Layout/Footer";
 import { Toaster } from "sonner";
 import { Analytics } from "@vercel/analytics/next";
 
@@ -62,9 +60,7 @@ export default function RootLayout({
   return (
     <html lang="fr" className={`${playfair.variable} ${inter.variable} h-full antialiased`} >
       <body className="min-h-full flex flex-col">
-        <Navbar />
         <main>{children}</main>
-        <Footer />
         <Toaster richColors position="top-right" />
         <Analytics />
       </body>

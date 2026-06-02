@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
-import CTABanner from '@/Components/Home/CTABanner';
-import FaqItem from '@/Components/ui/faqItem';
+import CTABanner from '@/components/Home/CTABanner';
+import FaqItem from '@/components/ui/faqItem';
 
 const faqs = [
   {

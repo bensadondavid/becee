@@ -1,0 +1,86 @@
+@theme {
+  --color-background: hsl(0 0% 100%);
+  --color-foreground: hsl(0 0% 4%);
+
+  --color-card: hsl(0 0% 100%);
+  --color-card-foreground: hsl(0 0% 4%);
+
+  --color-popover: hsl(0 0% 100%);
+  --color-popover-foreground: hsl(0 0% 4%);
+
+  --color-primary: hsl(0 0% 4%);
+  --color-primary-foreground: hsl(0 0% 100%);
+
+  --color-secondary: hsl(0 0% 97%);
+  --color-secondary-foreground: hsl(0 0% 4%);
+
+  --color-muted: hsl(0 0% 96%);
+  --color-muted-foreground: hsl(0 0% 45%);
+
+  --color-accent: #1e5bff;
+  --color-accent-foreground: hsl(0 0% 100%);
+
+  --color-destructive: hsl(0 84.2% 60.2%);
+
+  --color-border: hsl(0 0% 90%);
+  --color-input: hsl(0 0% 90%);
+  --color-ring: #1e5bff;
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-inter);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-playfair);
+}
+
+.text-gold {
+  color: var(--color-accent);
+}
+
+.border-gold {
+  border-color: var(--color-accent);
+}
+
+.bg-gold {
+  background-color: var(--color-accent);
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-left {
+  from {
+    opacity: 0;
+    transform: translateX(32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.65s ease-out both;
+}
+
+.animate-fade-left {
+  animation: fade-left 0.65s ease-out 0.15s both;
+}
+
+.animate-fade-up-delayed {
+  animation: fade-up 0.55s ease-out 0.35s both;
+}

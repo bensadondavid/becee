@@ -1,0 +1,39 @@
+.dashboard-layout {
+
+  --color-background: hsl(0 0% 98%);
+
+  --color-foreground: hsl(220 15% 10%);
+
+  --color-card: hsl(0 0% 100%);
+
+  --color-card-foreground: hsl(220 15% 10%);
+
+  --color-primary: hsl(222 100% 56%);
+
+  --color-muted: hsl(220 14% 96%);
+
+  --color-muted-foreground: hsl(220 9% 46%);
+
+  --color-border: hsl(220 13% 91%);
+
+  --color-input: hsl(220 13% 91%);
+
+  --color-ring: hsl(222 100% 56%);
+
+  background: var(--color-background);
+
+  color: var(--color-foreground);
+
+  font-family: var(--font-inter);
+
+}
+
+.dashboard-layout h1,
+
+.dashboard-layout h2,
+
+.dashboard-layout h3 {
+
+  font-family: var(--font-inter);
+
+}
