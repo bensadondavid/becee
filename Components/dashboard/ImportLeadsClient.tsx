@@ -7,28 +7,9 @@ import { Card } from "@/Components/ui/card";
 import { Button } from "@/Components/ui/button";
 import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/Components/ui/select";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/Components/ui/table";
-import {
-  Upload,
-  FileSpreadsheet,
-  Globe,
-  Loader2,
-  CheckCircle,
-} from "lucide-react";
+import {Select,SelectContent,SelectItem,SelectTrigger,SelectValue,} from "@/Components/ui/select";
+import {Table,TableBody,TableCell,TableHead,TableHeader,TableRow,} from "@/Components/ui/table";
+import {Upload,FileSpreadsheet,Globe,Loader2,CheckCircle,} from "lucide-react";
 import { toast } from "sonner";
 
 const LEAD_FIELDS = [
@@ -37,10 +18,8 @@ const LEAD_FIELDS = [
   { key: "phone", label: "Téléphone" },
   { key: "companyName", label: "Entreprise" },
   { key: "city", label: "Ville" },
-  { key: "country", label: "Pays" },
   { key: "website", label: "Site web" },
   { key: "productType", label: "Type produit" },
-  { key: "estimatedBudget", label: "Budget estimé" },
   { key: "potentialValue", label: "Valeur potentielle" },
   { key: "source", label: "Source" },
   { key: "assignedTo", label: "Commercial" },
@@ -65,10 +44,8 @@ type LeadImportPayload = {
   phone?: string;
   companyName?: string;
   city?: string;
-  country?: string;
   website?: string;
   productType?: string;
-  estimatedBudget?: number;
   potentialValue?: number;
   source?: string;
   assignedTo?: string;
@@ -162,7 +139,6 @@ function MappingStep({
           }
 
           if (
-            leadField === "estimatedBudget" ||
             leadField === "potentialValue"
           ) {
             lead[leadField] = Number(value) || undefined;
