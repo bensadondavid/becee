@@ -7,7 +7,6 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  ResponsiveContainer,
   Cell,
 } from "recharts";
 import { Card } from "@/components/ui/card";
@@ -64,44 +63,42 @@ export default function StatusChart({ leads }: StatusChartProps) {
     <Card className="p-5">
       <h3 className="mb-4 text-sm font-semibold">Leads par statut</h3>
 
-      <div className="h-56">
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={data} barSize={32}>
-            <CartesianGrid
-              strokeDasharray="3 3"
-              stroke="hsl(220 13% 91%)"
-              vertical={false}
-            />
+      <div className="h-56 w-full min-w-0 overflow-hidden">
+        <BarChart width={700} height={224} data={data} barSize={32}>
+          <CartesianGrid
+            strokeDasharray="3 3"
+            stroke="hsl(220 13% 91%)"
+            vertical={false}
+          />
 
-            <XAxis
-              dataKey="name"
-              tick={{ fontSize: 12 }}
-              axisLine={false}
-              tickLine={false}
-            />
+          <XAxis
+            dataKey="name"
+            tick={{ fontSize: 12 }}
+            axisLine={false}
+            tickLine={false}
+          />
 
-            <YAxis
-              tick={{ fontSize: 12 }}
-              axisLine={false}
-              tickLine={false}
-              allowDecimals={false}
-            />
+          <YAxis
+            tick={{ fontSize: 12 }}
+            axisLine={false}
+            tickLine={false}
+            allowDecimals={false}
+          />
 
-            <Tooltip
-              contentStyle={{
-                borderRadius: 8,
-                border: "1px solid hsl(220 13% 91%)",
-                fontSize: 13,
-              }}
-            />
+          <Tooltip
+            contentStyle={{
+              borderRadius: 8,
+              border: "1px solid hsl(220 13% 91%)",
+              fontSize: 13,
+            }}
+          />
 
-            <Bar dataKey="count" name="Leads" radius={[4, 4, 0, 0]}>
-              {data.map((entry) => (
-                <Cell key={entry.status} fill={entry.fill} />
-              ))}
-            </Bar>
-          </BarChart>
-        </ResponsiveContainer>
+          <Bar dataKey="count" name="Leads" radius={[4, 4, 0, 0]}>
+            {data.map((entry) => (
+              <Cell key={entry.status} fill={entry.fill} />
+            ))}
+          </Bar>
+        </BarChart>
       </div>
     </Card>
   );
