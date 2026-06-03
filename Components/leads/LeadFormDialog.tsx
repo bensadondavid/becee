@@ -10,18 +10,18 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from "@/Components/ui/dialog";
+import { Button } from "@/Components/ui/button";
+import { Input } from "@/Components/ui/input";
+import { Label } from "@/Components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
+} from "@/Components/ui/select";
+import { Textarea } from "@/Components/ui/textarea";
 
 const SOURCES = ["Facebook", "Google", "Recommandation", "Salon", "Instagram", "LinkedIn", "Site web", "Autre"];
 const STATUSES = ["nouveau", "contacte", "qualifie", "proposition", "gagne", "perdu"];

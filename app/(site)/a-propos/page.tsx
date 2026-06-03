@@ -14,7 +14,7 @@ import { Target, Heart, Shield, Lightbulb, Search, PenTool, Code2, Rocket, Palet
 import SectionHeading from '@/utils/SectionHeading';
 import AnimatedCard from '@/utils/AnimatedCard';
 import GridBackground from '@/utils/GridBackground';
-import CTABanner from '@/components/Home/CTABanner';
+import CTABanner from '@/Components/Home/CTABanner';
 
 const values = [
   { icon: Target, title: 'Excellence technique', description: 'Nous utilisons les technologies les plus performantes et appliquons les meilleures pratiques de développement à chaque projet.' },

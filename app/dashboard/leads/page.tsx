@@ -1,5 +1,5 @@
 import { prisma} from "@/lib/database/prisma";
-import LeadsListClient from "@/components/dashboard/LeadsListClient";
+import LeadsListClient from "@/Components/dashboard/LeadsListClient";
 import { LeadStatus, LeadPriority } from "@/lib/database/prisma/enums";
 
 

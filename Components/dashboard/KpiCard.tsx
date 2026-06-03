@@ -1,4 +1,4 @@
-import { Card } from "@/components/ui/card";
+import { Card } from "@/Components/ui/card";
 import type { LucideIcon } from "lucide-react";
 
 type KpiCardProps = {

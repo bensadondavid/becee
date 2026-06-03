@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { Card } from "@/components/ui/card";
-import { PriorityBadge } from "@/components/leads/StatusBadge";
+import { Card } from "@/Components/ui/card";
+import { PriorityBadge } from "@/Components/leads/StatusBadge";
 import { format, isAfter, startOfToday } from "date-fns";
 import { fr } from "date-fns/locale";
 import { CalendarClock } from "lucide-react";

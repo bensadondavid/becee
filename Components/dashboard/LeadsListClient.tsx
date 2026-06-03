@@ -9,18 +9,18 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+} from "@/Components/ui/table";
+import { Input } from "@/Components/ui/input";
+import { Button } from "@/Components/ui/button";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { StatusBadge, PriorityBadge } from "@/components/leads/StatusBadge";
-import LeadFormDialog from "@/components/leads/LeadFormDialog";
+} from "@/Components/ui/select";
+import { StatusBadge, PriorityBadge } from "@/Components/leads/StatusBadge";
+import LeadFormDialog from "@/Components/leads/LeadFormDialog";
 import { Plus, Search } from "lucide-react";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";

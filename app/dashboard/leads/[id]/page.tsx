@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/database/prisma";
-import LeadDetailClient from "@/components/leads/LeadDetailClient";
+import LeadDetailClient from "@/Components/leads/LeadDetailClient";
 
 type LeadPageProps = {
   params: Promise<{

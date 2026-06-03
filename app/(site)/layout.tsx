@@ -1,5 +1,5 @@
-import Navbar from "@/components/Layout/NavBar";
-import Footer from "@/components/Layout/Footer";
+import Navbar from "@/Components/Layout/NavBar";
+import Footer from "@/Components/Layout/Footer";
 import './site.css'
 
 export default function SiteLayout({

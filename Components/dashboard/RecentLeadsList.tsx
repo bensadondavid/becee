@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { Card } from "@/components/ui/card";
-import { StatusBadge } from "@/components/leads/StatusBadge";
+import { Card } from "@/Components/ui/card";
+import { StatusBadge } from "@/Components/leads/StatusBadge";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 

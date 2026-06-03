@@ -2,10 +2,10 @@ import { prisma } from "@/lib/database/prisma";
 import { Users, UserPlus, TrendingUp, DollarSign } from "lucide-react";
 import { startOfMonth, isAfter } from "date-fns";
 
-import KpiCard from "@/components/dashboard/KpiCard";
-import StatusChart from "@/components/dashboard/StatusChart";
-import RecentLeadsList from "@/components/dashboard/RecentLeadsList";
-import UpcomingFollowups from "@/components/dashboard/UpcomingFollowups";
+import KpiCard from "@/Components/dashboard/KpiCard";
+import StatusChart from "@/Components/dashboard/StatusChart";
+import RecentLeadsList from "@/Components/dashboard/RecentLeadsList";
+import UpcomingFollowups from "@/Components/dashboard/UpcomingFollowups";
 
 export default async function DashboardPage() {
   const leads = await prisma.lead.findMany({

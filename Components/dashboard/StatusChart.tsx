@@ -9,7 +9,7 @@ import {
   Tooltip,
   Cell,
 } from "recharts";
-import { Card } from "@/components/ui/card";
+import { Card } from "@/Components/ui/card";
 
 const statusLabels = {
   LEAD_FRAIS: "Lead frais",
