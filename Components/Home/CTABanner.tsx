@@ -1,6 +1,6 @@
-import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
-import GridBackground from '@/utils/GridBackground';
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import GridBackground from "@/utils/GridBackground";
 
 export default function CTABanner() {
   return (
@@ -17,8 +17,8 @@ export default function CTABanner() {
         </h2>
 
         <p className="mb-10 font-inter text-base leading-relaxed text-muted-foreground">
-          Discutons de vos besoins. Notre équipe vous propose un accompagnement personnalisé,
-          du brief initial à la mise en production.
+          Discutons de vos besoins. Notre équipe vous propose un accompagnement
+          personnalisé, du brief initial à la mise en production.
         </p>
 
         <div className="flex flex-col justify-center gap-3 sm:flex-row">

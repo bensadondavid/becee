@@ -1,26 +1,26 @@
-import { Star } from 'lucide-react';
-import SectionHeading from '@/utils/SectionHeading';
+import { Star } from "lucide-react";
+import SectionHeading from "@/utils/SectionHeading";
 
 const testimonials = [
   {
     quote:
       "Notre site vitrine a doublé nos demandes de devis en 3 mois. L'équipe a parfaitement compris notre métier et nos clients.",
-    name: 'Marie L.',
-    role: 'Gérante, Salon de coiffure',
+    name: "Marie L.",
+    role: "Gérante, Salon de coiffure",
     rating: 5,
   },
   {
     quote:
-      'Le système de réservation en ligne a transformé notre organisation. Nous gagnons plus de 10 heures par semaine sur la gestion des rendez-vous.',
-    name: 'Thomas R.',
-    role: 'Directeur, Cabinet médical',
+      "Le système de réservation en ligne a transformé notre organisation. Nous gagnons plus de 10 heures par semaine sur la gestion des rendez-vous.",
+    name: "Thomas R.",
+    role: "Directeur, Cabinet médical",
     rating: 5,
   },
   {
     quote:
       "L'application de gestion développée sur mesure a permis de digitaliser l'ensemble de nos processus. Un investissement rentabilisé en 6 mois.",
-    name: 'Sophie D.',
-    role: 'Co-fondatrice, PME logistique',
+    name: "Sophie D.",
+    role: "Co-fondatrice, PME logistique",
     rating: 5,
   },
 ];

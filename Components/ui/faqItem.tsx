@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useEffect, useRef, useState } from 'react';
-import { Plus, Minus } from 'lucide-react';
+import { useEffect, useRef, useState } from "react";
+import { Plus, Minus } from "lucide-react";
 
 interface FaqItemProps {
   faq: {
@@ -47,10 +47,10 @@ export default function FaqItem({ faq }: FaqItemProps) {
       <div
         ref={contentRef}
         style={{
-          maxHeight: open ? `${contentHeight}px` : '0px',
+          maxHeight: open ? `${contentHeight}px` : "0px",
           opacity: open ? 1 : 0,
-          overflow: 'hidden',
-          transition: 'max-height 0.35s ease, opacity 0.3s ease',
+          overflow: "hidden",
+          transition: "max-height 0.35s ease, opacity 0.3s ease",
         }}
       >
         <p className="font-inter text-base text-muted-foreground leading-relaxed pb-6">

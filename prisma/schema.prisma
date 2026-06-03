@@ -75,6 +75,12 @@ model Verification {
   @@map("verification")
 }
 
+model AllowedUser {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  createdAt DateTime @default(now())
+}
+
 enum LeadStatus {
   LEAD_FRAIS
   A_RAPPELER

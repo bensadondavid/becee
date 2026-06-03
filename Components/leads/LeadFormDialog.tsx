@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { useQueryClient } from "@tanstack/react-query";
 
 import {
   Dialog,
@@ -23,22 +23,33 @@ import {
 } from "@/Components/ui/select";
 import { Textarea } from "@/Components/ui/textarea";
 
-const SOURCES = ["Facebook", "Google", "Recommandation", "Salon", "Instagram", "LinkedIn", "Site web", "Autre"];
-const STATUSES = ["nouveau", "contacte", "qualifie", "proposition", "gagne", "perdu"];
-const PRIORITIES = ["faible", "moyenne", "haute"];
+const STATUSES = [
+  { value: "LEAD_FRAIS", label: "Lead frais" },
+  { value: "A_RAPPELER", label: "À rappeler" },
+  { value: "PAS_INTERESSE", label: "Pas intéressé" },
+  { value: "EN_ATTENTE", label: "En attente" },
+  { value: "RDV", label: "RDV" },
+  { value: "NRP_1", label: "NRP 1" },
+  { value: "NRP_2", label: "NRP 2" },
+  { value: "DEVIS_A_CREER", label: "Devis à créer" },
+  { value: "DEVIS_ENVOYE", label: "Devis envoyé" },
+  { value: "CONTRAT_SIGNE", label: "Contrat signé" },
+];
+const PRIORITIES = [
+  { value: "FAIBLE", label: "Faible" },
+  { value: "MOYENNE", label: "Moyenne" },
+  { value: "HAUTE", label: "Haute" },
+];
 
 type LeadForm = {
   contactName: string;
   email: string;
   phone: string;
   city: string;
-  country: string;
   companyName: string;
   website: string;
   productType: string;
-  estimatedBudget: string;
   potentialValue: string;
-  source: string;
   assignedTo: string;
   status: string;
   priority: string;
@@ -55,16 +66,13 @@ const defaultForm: LeadForm = {
   email: "",
   phone: "",
   city: "",
-  country: "France",
   companyName: "",
   website: "",
   productType: "",
-  estimatedBudget: "",
   potentialValue: "",
-  source: "Site web",
   assignedTo: "",
-  status: "nouveau",
-  priority: "moyenne",
+  status: "LEAD_FRAIS",
+  priority: "MOYENNE",
   notes: "",
 };
 
@@ -72,9 +80,9 @@ export default function LeadFormDialog({
   open,
   onOpenChange,
 }: LeadFormDialogProps) {
-  const router = useRouter();
   const [form, setForm] = useState<LeadForm>(defaultForm);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const queryClient = useQueryClient();
 
   const handleChange = (field: keyof LeadForm, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -89,15 +97,16 @@ export default function LeadFormDialog({
 
     setIsSubmitting(true);
 
-    const response = await fetch("/api/leads", {
+    const response = await fetch("/api/leads/newlead", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         ...form,
-        estimatedBudget: form.estimatedBudget ? Number(form.estimatedBudget) : null,
-        potentialValue: form.potentialValue ? Number(form.potentialValue) : null,
+        potentialValue: form.potentialValue
+          ? Number(form.potentialValue)
+          : null,
       }),
     });
 
@@ -108,10 +117,13 @@ export default function LeadFormDialog({
       return;
     }
 
+    await queryClient.invalidateQueries({
+      queryKey: ["leads"],
+    });
+
     toast.success("Lead créé avec succès");
     resetForm();
     onOpenChange(false);
-    router.refresh();
   };
 
   return (
@@ -166,14 +178,6 @@ export default function LeadFormDialog({
             </div>
 
             <div className="space-y-1.5">
-              <Label>Pays</Label>
-              <Input
-                value={form.country}
-                onChange={(e) => handleChange("country", e.target.value)}
-              />
-            </div>
-
-            <div className="space-y-1.5">
               <Label>Site web</Label>
               <Input
                 value={form.website}
@@ -190,40 +194,12 @@ export default function LeadFormDialog({
             </div>
 
             <div className="space-y-1.5">
-              <Label>Budget estimé (€)</Label>
-              <Input
-                type="number"
-                value={form.estimatedBudget}
-                onChange={(e) => handleChange("estimatedBudget", e.target.value)}
-              />
-            </div>
-
-            <div className="space-y-1.5">
               <Label>Valeur potentielle (€)</Label>
               <Input
                 type="number"
                 value={form.potentialValue}
                 onChange={(e) => handleChange("potentialValue", e.target.value)}
               />
-            </div>
-
-            <div className="space-y-1.5">
-              <Label>Source</Label>
-              <Select
-                value={form.source}
-                onValueChange={(value) => handleChange("source", value)}
-              >
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {SOURCES.map((source) => (
-                    <SelectItem key={source} value={source}>
-                      {source}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
             </div>
 
             <div className="space-y-1.5">
@@ -245,8 +221,8 @@ export default function LeadFormDialog({
                 </SelectTrigger>
                 <SelectContent>
                   {STATUSES.map((status) => (
-                    <SelectItem key={status} value={status}>
-                      {status}
+                    <SelectItem key={status.value} value={status.value}>
+                      {status.label}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -264,8 +240,8 @@ export default function LeadFormDialog({
                 </SelectTrigger>
                 <SelectContent>
                   {PRIORITIES.map((priority) => (
-                    <SelectItem key={priority} value={priority}>
-                      {priority}
+                    <SelectItem key={priority.value} value={priority.value}>
+                      {priority.label}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -283,7 +259,11 @@ export default function LeadFormDialog({
           </div>
 
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => onOpenChange(false)}
+            >
               Annuler
             </Button>
 

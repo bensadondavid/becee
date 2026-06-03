@@ -1,21 +1,21 @@
-import Link from 'next/link';
-import Image from 'next/image';
+import Link from "next/link";
+import Image from "next/image";
 
 const footerLinks = {
   Services: [
-    { label: 'Site vitrine', path: '/services' },
-    { label: 'Système de réservation', path: '/services' },
-    { label: 'Application métier', path: '/services' },
+    { label: "Site vitrine", path: "/services" },
+    { label: "Système de réservation", path: "/services" },
+    { label: "Application métier", path: "/services" },
   ],
   Agence: [
-    { label: 'À propos', path: '/a-propos' },
-    { label: 'FAQ', path: '/faq' },
-    { label: 'Contact', path: '/contact' },
+    { label: "À propos", path: "/a-propos" },
+    { label: "FAQ", path: "/faq" },
+    { label: "Contact", path: "/contact" },
   ],
   Légal: [
-    { label: 'Mentions légales', path: '/mentions-legales' },
-    { label: 'Politique de confidentialité', path: '/confidentialite' },
-    { label: 'CGV', path: '/cgv' },
+    { label: "Mentions légales", path: "/mentions-legales" },
+    { label: "Politique de confidentialité", path: "/confidentialite" },
+    { label: "CGV", path: "/cgv" },
   ],
 };
 
@@ -28,14 +28,18 @@ export default function Footer() {
         <div className="grid grid-cols-2 gap-10 md:grid-cols-4">
           <div className="col-span-2 md:col-span-1">
             <Link href="/" className="mb-5 flex items-center gap-2.5">
-              <Image src='/logo-becee.png' height={80} width={80} alt='logo becee' />
+              <Image
+                src="/logo-becee.png"
+                height={80}
+                width={80}
+                alt="logo becee"
+              />
             </Link>
 
             <p className="mb-6 font-inter text-sm leading-relaxed text-muted-foreground">
-              Agence de développement web spécialisée dans les solutions digitales sur mesure
-              pour les PME françaises.
+              Agence de développement web spécialisée dans les solutions
+              digitales sur mesure pour les PME françaises.
             </p>
-
           </div>
 
           {Object.entries(footerLinks).map(([category, links]) => (

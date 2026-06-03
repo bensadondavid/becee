@@ -70,8 +70,7 @@ type PriorityBadgeProps = {
 };
 
 export function StatusBadge({ status }: StatusBadgeProps) {
-  const config =
-    statusConfig[status as LeadStatus] ?? statusConfig.LEAD_FRAIS;
+  const config = statusConfig[status as LeadStatus] ?? statusConfig.LEAD_FRAIS;
 
   return (
     <Badge

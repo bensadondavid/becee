@@ -31,19 +31,24 @@ import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { toast } from "sonner";
 
-const SOURCES = [
-  "Facebook",
-  "Google",
-  "Recommandation",
-  "Salon",
-  "Instagram",
-  "LinkedIn",
-  "Site web",
-  "Autre",
+const STATUSES = [
+  { value: "LEAD_FRAIS", label: "Lead frais" },
+  { value: "A_RAPPELER", label: "À rappeler" },
+  { value: "PAS_INTERESSE", label: "Pas intéressé" },
+  { value: "EN_ATTENTE", label: "En attente" },
+  { value: "RDV", label: "RDV" },
+  { value: "NRP_1", label: "NRP 1" },
+  { value: "NRP_2", label: "NRP 2" },
+  { value: "DEVIS_A_CREER", label: "Devis à créer" },
+  { value: "DEVIS_ENVOYE", label: "Devis envoyé" },
+  { value: "CONTRAT_SIGNE", label: "Contrat signé" },
 ];
 
-const STATUSES = ["nouveau", "contacte", "qualifie", "proposition", "gagne", "perdu"];
-const PRIORITIES = ["faible", "moyenne", "haute"];
+const PRIORITIES = [
+  { value: "FAIBLE", label: "Faible" },
+  { value: "MOYENNE", label: "Moyenne" },
+  { value: "HAUTE", label: "Haute" },
+];
 
 type Lead = {
   id: string;
@@ -52,12 +57,9 @@ type Lead = {
   phone: string | null;
   email: string | null;
   city: string | null;
-  country: string | null;
   website: string | null;
   productType: string | null;
-  estimatedBudget: number | null;
   potentialValue: number | null;
-  source: string | null;
   assignedTo: string | null;
   status: string;
   priority: string;
@@ -73,12 +75,9 @@ type LeadForm = {
   phone: string;
   email: string;
   city: string;
-  country: string;
   website: string;
   productType: string;
-  estimatedBudget: string;
   potentialValue: string;
-  source: string;
   assignedTo: string;
   status: string;
   priority: string;
@@ -122,12 +121,9 @@ export default function LeadDetailClient({ lead }: { lead: Lead }) {
     phone: lead.phone || "",
     email: lead.email || "",
     city: lead.city || "",
-    country: lead.country || "",
     website: lead.website || "",
     productType: lead.productType || "",
-    estimatedBudget: lead.estimatedBudget?.toString() || "",
     potentialValue: lead.potentialValue?.toString() || "",
-    source: lead.source || "",
     assignedTo: lead.assignedTo || "",
     status: lead.status,
     priority: lead.priority,
@@ -141,15 +137,16 @@ export default function LeadDetailClient({ lead }: { lead: Lead }) {
   };
 
   const handleSave = async () => {
-    const response = await fetch(`/api/leads/${lead.id}`, {
+    const response = await fetch(`/api/leads/modifiedLead/${lead.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         ...form,
-        estimatedBudget: form.estimatedBudget ? Number(form.estimatedBudget) : null,
-        potentialValue: form.potentialValue ? Number(form.potentialValue) : null,
+        potentialValue: form.potentialValue
+          ? Number(form.potentialValue)
+          : null,
         lastContactDate: form.lastContactDate || null,
         nextFollowupDate: form.nextFollowupDate || null,
       }),
@@ -166,7 +163,7 @@ export default function LeadDetailClient({ lead }: { lead: Lead }) {
   };
 
   const handleDelete = async () => {
-    const response = await fetch(`/api/leads/${lead.id}`, {
+    const response = await fetch(`/api/leads/modifiedLead/${lead.id}`, {
       method: "DELETE",
     });
 
@@ -187,7 +184,7 @@ export default function LeadDetailClient({ lead }: { lead: Lead }) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        status: "contacte",
+        status: "A_RAPPELER",
         lastContactDate: new Date().toISOString(),
       }),
     });
@@ -213,7 +210,9 @@ export default function LeadDetailClient({ lead }: { lead: Lead }) {
 
       <div className="flex items-start justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">{lead.contactName}</h1>
+          <h1 className="text-2xl font-bold tracking-tight">
+            {lead.contactName}
+          </h1>
           <p className="mt-0.5 text-muted-foreground">
             {lead.companyName || "Pas d'entreprise"}
           </p>
@@ -233,14 +232,18 @@ export default function LeadDetailClient({ lead }: { lead: Lead }) {
         <div className="flex gap-2">
           {!editing ? (
             <>
-              {lead.status === "nouveau" && (
+              {lead.status === "LEAD_FRAIS" && (
                 <Button variant="outline" size="sm" onClick={markAsContacted}>
                   <Phone className="mr-1.5 h-4 w-4" />
                   Marquer contacté
                 </Button>
               )}
 
-              <Button variant="outline" size="sm" onClick={() => setEditing(true)}>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setEditing(true)}
+              >
                 <Pencil className="mr-1.5 h-4 w-4" />
                 Modifier
               </Button>
@@ -278,7 +281,11 @@ export default function LeadDetailClient({ lead }: { lead: Lead }) {
             </>
           ) : (
             <>
-              <Button variant="outline" size="sm" onClick={() => setEditing(false)}>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setEditing(false)}
+              >
                 <X className="mr-1.5 h-4 w-4" />
                 Annuler
               </Button>
@@ -309,7 +316,10 @@ export default function LeadDetailClient({ lead }: { lead: Lead }) {
 
           <FieldRow label="Téléphone">
             {editing ? (
-              <Input value={form.phone} onChange={(e) => handleChange("phone", e.target.value)} />
+              <Input
+                value={form.phone}
+                onChange={(e) => handleChange("phone", e.target.value)}
+              />
             ) : (
               <span className="text-sm">{lead.phone || "—"}</span>
             )}
@@ -317,7 +327,10 @@ export default function LeadDetailClient({ lead }: { lead: Lead }) {
 
           <FieldRow label="Email">
             {editing ? (
-              <Input value={form.email} onChange={(e) => handleChange("email", e.target.value)} />
+              <Input
+                value={form.email}
+                onChange={(e) => handleChange("email", e.target.value)}
+              />
             ) : (
               <span className="text-sm">{lead.email || "—"}</span>
             )}
@@ -325,17 +338,12 @@ export default function LeadDetailClient({ lead }: { lead: Lead }) {
 
           <FieldRow label="Ville">
             {editing ? (
-              <Input value={form.city} onChange={(e) => handleChange("city", e.target.value)} />
+              <Input
+                value={form.city}
+                onChange={(e) => handleChange("city", e.target.value)}
+              />
             ) : (
               <span className="text-sm">{lead.city || "—"}</span>
-            )}
-          </FieldRow>
-
-          <FieldRow label="Pays">
-            {editing ? (
-              <Input value={form.country} onChange={(e) => handleChange("country", e.target.value)} />
-            ) : (
-              <span className="text-sm">{lead.country || "—"}</span>
             )}
           </FieldRow>
         </Card>
@@ -389,18 +397,6 @@ export default function LeadDetailClient({ lead }: { lead: Lead }) {
             )}
           </FieldRow>
 
-          <FieldRow label="Budget estimé">
-            {editing ? (
-              <Input
-                type="number"
-                value={form.estimatedBudget}
-                onChange={(e) => handleChange("estimatedBudget", e.target.value)}
-              />
-            ) : (
-              <span className="text-sm">{formatMoney(lead.estimatedBudget)}</span>
-            )}
-          </FieldRow>
-
           <FieldRow label="Valeur potentielle">
             {editing ? (
               <Input
@@ -409,32 +405,15 @@ export default function LeadDetailClient({ lead }: { lead: Lead }) {
                 onChange={(e) => handleChange("potentialValue", e.target.value)}
               />
             ) : (
-              <span className="text-sm">{formatMoney(lead.potentialValue)}</span>
+              <span className="text-sm">
+                {formatMoney(lead.potentialValue)}
+              </span>
             )}
           </FieldRow>
         </Card>
 
         <Card className="p-5">
           <h3 className="mb-3 text-sm font-semibold">Suivi</h3>
-
-          <FieldRow label="Source">
-            {editing ? (
-              <Select value={form.source} onValueChange={(value) => handleChange("source", value)}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {SOURCES.map((source) => (
-                    <SelectItem key={source} value={source}>
-                      {source}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            ) : (
-              <span className="text-sm">{lead.source || "—"}</span>
-            )}
-          </FieldRow>
 
           <FieldRow label="Commercial">
             {editing ? (
@@ -449,14 +428,17 @@ export default function LeadDetailClient({ lead }: { lead: Lead }) {
 
           <FieldRow label="Statut">
             {editing ? (
-              <Select value={form.status} onValueChange={(value) => handleChange("status", value)}>
+              <Select
+                value={form.status}
+                onValueChange={(value) => handleChange("status", value)}
+              >
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
                   {STATUSES.map((status) => (
-                    <SelectItem key={status} value={status}>
-                      {status}
+                    <SelectItem key={status.value} value={status.value}>
+                      {status.label}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -468,14 +450,17 @@ export default function LeadDetailClient({ lead }: { lead: Lead }) {
 
           <FieldRow label="Priorité">
             {editing ? (
-              <Select value={form.priority} onValueChange={(value) => handleChange("priority", value)}>
+              <Select
+                value={form.priority}
+                onValueChange={(value) => handleChange("priority", value)}
+              >
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
                   {PRIORITIES.map((priority) => (
-                    <SelectItem key={priority} value={priority}>
-                      {priority}
+                    <SelectItem key={priority.value} value={priority.value}>
+                      {priority.label}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -490,12 +475,16 @@ export default function LeadDetailClient({ lead }: { lead: Lead }) {
               <Input
                 type="date"
                 value={form.lastContactDate}
-                onChange={(e) => handleChange("lastContactDate", e.target.value)}
+                onChange={(e) =>
+                  handleChange("lastContactDate", e.target.value)
+                }
               />
             ) : (
               <span className="text-sm">
                 {lead.lastContactDate
-                  ? format(new Date(lead.lastContactDate), "d MMM yyyy", { locale: fr })
+                  ? format(new Date(lead.lastContactDate), "d MMM yyyy", {
+                      locale: fr,
+                    })
                   : "—"}
               </span>
             )}
@@ -506,12 +495,16 @@ export default function LeadDetailClient({ lead }: { lead: Lead }) {
               <Input
                 type="date"
                 value={form.nextFollowupDate}
-                onChange={(e) => handleChange("nextFollowupDate", e.target.value)}
+                onChange={(e) =>
+                  handleChange("nextFollowupDate", e.target.value)
+                }
               />
             ) : (
               <span className="text-sm">
                 {lead.nextFollowupDate
-                  ? format(new Date(lead.nextFollowupDate), "d MMM yyyy", { locale: fr })
+                  ? format(new Date(lead.nextFollowupDate), "d MMM yyyy", {
+                      locale: fr,
+                    })
                   : "—"}
               </span>
             )}

@@ -1,8 +1,8 @@
 // components/services/ServicesFootnote.tsx
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { motion } from 'framer-motion';
+import Link from "next/link";
+import { motion } from "framer-motion";
 
 export default function ServicesFootnote() {
   return (
@@ -14,7 +14,7 @@ export default function ServicesFootnote() {
       className="mt-14 text-center"
     >
       <p className="font-inter text-sm text-muted-foreground">
-        Besoin d&apos;un projet qui ne rentre dans aucune case ?{' '}
+        Besoin d&apos;un projet qui ne rentre dans aucune case ?{" "}
         <Link
           href="/contact"
           className="text-foreground underline underline-offset-4 hover:text-accent transition-colors"

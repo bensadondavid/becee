@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { ReactNode } from "react";
 
 type SectionHeadingProps = {
   badge?: ReactNode;
@@ -14,9 +14,7 @@ export default function SectionHeading({
   center = true,
 }: SectionHeadingProps) {
   return (
-    <div
-      className={`${center ? 'text-center mx-auto' : ''} max-w-2xl mb-14`}
-    >
+    <div className={`${center ? "text-center mx-auto" : ""} max-w-2xl mb-14`}>
       {badge && (
         <span className="font-inter inline-block text-xs tracking-widest uppercase text-accent mb-4 font-medium">
           — {badge}

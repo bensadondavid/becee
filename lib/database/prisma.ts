@@ -1,6 +1,6 @@
 import { PrismaClient } from "./prisma/client";
 import { PrismaNeon } from "@prisma/adapter-neon";
-import 'dotenv/config'
+import "dotenv/config";
 // a utiiser pour lancer un seed
 // import { neonConfig } from "@neondatabase/serverless";
 // import ws from "ws";

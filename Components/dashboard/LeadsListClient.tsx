@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
 import {
   Table,
   TableBody,
@@ -51,7 +52,7 @@ type Lead = {
   contactName: string;
   companyName: string | null;
   productType: string | null;
-  createdAt: Date;
+  createdAt: string;
   status: string;
   priority: string;
   source: string | null;
@@ -59,11 +60,63 @@ type Lead = {
   email: string | null;
 };
 
-export default function LeadsListClient({ leads }: { leads: Lead[] }) {
+type FetchLeadsParams = {
+  page: number;
+  search: string;
+  status: string;
+  priority: string;
+};
+
+async function fetchLeads({
+  page,
+  search,
+  status,
+  priority,
+}: FetchLeadsParams): Promise<Lead[]> {
+  const params = new URLSearchParams();
+
+  params.set("page", page.toString());
+
+  if (search) params.set("search", search);
+  if (status && status !== "tous") params.set("status", status);
+  if (priority && priority !== "toutes") params.set("priority", priority);
+
+  const response = await fetch(`/api/leads?${params.toString()}`);
+
+  if (!response.ok) {
+    throw new Error("Impossible de récupérer les leads");
+  }
+
+  return response.json();
+}
+
+export default function LeadsListClient() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [dialogOpen, setDialogOpen] = useState(false);
 
+  const page = Number(searchParams.get("page")) || 1;
+  const search = searchParams.get("search") ?? "";
+  const status = searchParams.get("status") ?? "tous";
+  const priority = searchParams.get("priority") ?? "toutes";
+
+  const {
+    data: leads = [],
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["leads", page, search, status, priority],
+    queryFn: () =>
+      fetchLeads({
+        page,
+        search,
+        status,
+        priority,
+      }),
+    staleTime: Infinity,
+    gcTime: 1000 * 60 * 30,
+    refetchOnWindowFocus: false,
+  });
 
   const updateFilter = (key: string, value: string) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -76,17 +129,23 @@ export default function LeadsListClient({ leads }: { leads: Lead[] }) {
 
     params.delete("page");
 
-    router.push(`/dashboard/leads?${params.toString()}`);
+    const queryString = params.toString();
+    router.push(
+      queryString ? `/dashboard/leads?${queryString}` : "/dashboard/leads",
+    );
   };
 
-  
   return (
     <div className="space-y-5">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Leads</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            {leads.length} lead{leads.length > 1 ? "s" : ""} au total
+            {isLoading
+              ? "Chargement des leads..."
+              : `${leads.length} lead${leads.length > 1 ? "s" : ""} affiché${
+                  leads.length > 1 ? "s" : ""
+                }`}
           </p>
         </div>
 
@@ -101,16 +160,21 @@ export default function LeadsListClient({ leads }: { leads: Lead[] }) {
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
             placeholder="Rechercher..."
-            defaultValue={searchParams.get("search") ?? ""}
+            defaultValue={search}
             onBlur={(event) => {
               updateFilter("search", event.target.value);
+            }}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") {
+                updateFilter("search", event.currentTarget.value);
+              }
             }}
             className="pl-9"
           />
         </div>
 
         <Select
-          value={searchParams.get("status") ?? "tous"}
+          value={status}
           onValueChange={(value) => updateFilter("status", value)}
         >
           <SelectTrigger className="w-44">
@@ -126,7 +190,7 @@ export default function LeadsListClient({ leads }: { leads: Lead[] }) {
         </Select>
 
         <Select
-          value={searchParams.get("priority") ?? "toutes"}
+          value={priority}
           onValueChange={(value) => updateFilter("priority", value)}
         >
           <SelectTrigger className="w-36">
@@ -158,7 +222,29 @@ export default function LeadsListClient({ leads }: { leads: Lead[] }) {
           </TableHeader>
 
           <TableBody>
-            {leads.length === 0 && (
+            {isLoading && (
+              <TableRow>
+                <TableCell
+                  colSpan={8}
+                  className="py-12 text-center text-muted-foreground"
+                >
+                  Chargement...
+                </TableCell>
+              </TableRow>
+            )}
+
+            {isError && (
+              <TableRow>
+                <TableCell
+                  colSpan={8}
+                  className="py-12 text-center text-destructive"
+                >
+                  Impossible de charger les leads
+                </TableCell>
+              </TableRow>
+            )}
+
+            {!isLoading && !isError && leads.length === 0 && (
               <TableRow>
                 <TableCell
                   colSpan={8}
@@ -169,47 +255,49 @@ export default function LeadsListClient({ leads }: { leads: Lead[] }) {
               </TableRow>
             )}
 
-            {leads.map((lead) => (
-              <TableRow
-                key={lead.id}
-                className="cursor-pointer transition-colors hover:bg-muted/50"
-                onClick={() => router.push(`/dashboard/leads/${lead.id}`)}
-              >
-                <TableCell className="font-medium">
-                  {lead.contactName}
-                </TableCell>
+            {!isLoading &&
+              !isError &&
+              leads.map((lead) => (
+                <TableRow
+                  key={lead.id}
+                  className="cursor-pointer transition-colors hover:bg-muted/50"
+                  onClick={() => router.push(`/dashboard/leads/${lead.id}`)}
+                >
+                  <TableCell className="font-medium">
+                    {lead.contactName}
+                  </TableCell>
 
-                <TableCell className="text-muted-foreground">
-                  {lead.companyName || "—"}
-                </TableCell>
+                  <TableCell className="text-muted-foreground">
+                    {lead.companyName || "—"}
+                  </TableCell>
 
-                <TableCell className="text-muted-foreground">
-                  {lead.productType || "—"}
-                </TableCell>
+                  <TableCell className="text-muted-foreground">
+                    {lead.productType || "—"}
+                  </TableCell>
 
-                <TableCell className="text-muted-foreground">
-                  {format(new Date(lead.createdAt), "d MMM yy", {
-                    locale: fr,
-                  })}
-                </TableCell>
+                  <TableCell className="text-muted-foreground">
+                    {format(new Date(lead.createdAt), "d MMM yy", {
+                      locale: fr,
+                    })}
+                  </TableCell>
 
-                <TableCell>
-                  <StatusBadge status={lead.status} />
-                </TableCell>
+                  <TableCell>
+                    <StatusBadge status={lead.status} />
+                  </TableCell>
 
-                <TableCell>
-                  <PriorityBadge priority={lead.priority} />
-                </TableCell>
+                  <TableCell>
+                    <PriorityBadge priority={lead.priority} />
+                  </TableCell>
 
-                <TableCell className="text-muted-foreground">
-                  {lead.phone || "—"}
-                </TableCell>
+                  <TableCell className="text-muted-foreground">
+                    {lead.phone || "—"}
+                  </TableCell>
 
-                <TableCell className="text-sm text-muted-foreground">
-                  {lead.email || "—"}
-                </TableCell>
-              </TableRow>
-            ))}
+                  <TableCell className="text-sm text-muted-foreground">
+                    {lead.email || "—"}
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </div>

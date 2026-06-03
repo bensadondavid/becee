@@ -6,8 +6,20 @@ import KpiCard from "@/Components/dashboard/KpiCard";
 import StatusChart from "@/Components/dashboard/StatusChart";
 import RecentLeadsList from "@/Components/dashboard/RecentLeadsList";
 import UpcomingFollowups from "@/Components/dashboard/UpcomingFollowups";
+import { auth } from "@/lib/auth/auth";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
 export default async function DashboardPage() {
+  // auth
+
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  if (!session) {
+    redirect("/login");
+  }
+
   const leads = await prisma.lead.findMany({
     orderBy: {
       createdAt: "desc",
@@ -26,10 +38,7 @@ export default async function DashboardPage() {
 
   const pipelineValue = leads
     .filter((lead) => {
-      return (
-        lead.status !== "PAS_INTERESSE" &&
-        lead.status !== "CONTRAT_SIGNE"
-      );
+      return lead.status !== "PAS_INTERESSE" && lead.status !== "CONTRAT_SIGNE";
     })
     .reduce((sum, lead) => {
       return sum + (lead.potentialValue || lead.estimatedBudget || 0);
@@ -53,11 +62,7 @@ export default async function DashboardPage() {
           icon={UserPlus}
         />
 
-        <KpiCard
-          title="Contrats signés"
-          value={wonCount}
-          icon={TrendingUp}
-        />
+        <KpiCard title="Contrats signés" value={wonCount} icon={TrendingUp} />
 
         <KpiCard
           title="Valeur pipeline"

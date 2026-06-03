@@ -1,18 +1,14 @@
-import { auth } from "@/lib/auth/auth";
+import { prisma } from "@/lib/database/prisma";
 
-async function main() {
-  await auth.api.signUpEmail({
-    body: {
-      name: "David",
-      email: "beceeweb@gmail.com",
-      password: "YonaNitai0505!",
-    },
+async function createUser() {
+  await prisma.allowedUser.createMany({
+    data: [
+      { email: "bensadondavidn@gmail.com" },
+      { email: "beceeweb@gmail.com" },
+    ],
+    skipDuplicates: true,
   });
-
-  console.log("Admin créé");
 }
 
-main().catch((error) => {
-  console.error("Erreur lors de la création de l'admin", error);
-  process.exit(1);
-});
+createUser();
+console.log("user crée");

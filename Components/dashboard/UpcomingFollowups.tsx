@@ -17,9 +17,7 @@ type UpcomingFollowupsProps = {
   leads: Lead[];
 };
 
-export default function UpcomingFollowups({
-  leads,
-}: UpcomingFollowupsProps) {
+export default function UpcomingFollowups({ leads }: UpcomingFollowupsProps) {
   const today = startOfToday();
 
   const upcoming = leads
@@ -27,12 +25,12 @@ export default function UpcomingFollowups({
       (lead) =>
         lead.nextFollowupDate &&
         lead.status !== "gagne" &&
-        lead.status !== "perdu"
+        lead.status !== "perdu",
     )
     .sort(
       (a, b) =>
         new Date(a.nextFollowupDate!).getTime() -
-        new Date(b.nextFollowupDate!).getTime()
+        new Date(b.nextFollowupDate!).getTime(),
     )
     .slice(0, 5);
 

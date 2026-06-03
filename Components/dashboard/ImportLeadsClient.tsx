@@ -22,7 +22,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/Components/ui/table";
-import { Upload, FileSpreadsheet, Globe, Loader2, CheckCircle } from "lucide-react";
+import {
+  Upload,
+  FileSpreadsheet,
+  Globe,
+  Loader2,
+  CheckCircle,
+} from "lucide-react";
 import { toast } from "sonner";
 
 const LEAD_FIELDS = [
@@ -155,7 +161,10 @@ function MappingStep({
             return;
           }
 
-          if (leadField === "estimatedBudget" || leadField === "potentialValue") {
+          if (
+            leadField === "estimatedBudget" ||
+            leadField === "potentialValue"
+          ) {
             lead[leadField] = Number(value) || undefined;
             return;
           }
@@ -173,7 +182,7 @@ function MappingStep({
   const preview = rows.slice(0, 5);
 
   const contactNameColumn = Object.entries(mapping).find(
-    ([, value]) => value === "contactName"
+    ([, value]) => value === "contactName",
   )?.[0];
 
   const importableCount = contactNameColumn
@@ -256,7 +265,6 @@ function MappingStep({
         ) : (
           <CheckCircle className="mr-2 h-4 w-4" />
         )}
-
         Importer {importableCount} leads
       </Button>
     </div>
@@ -294,20 +302,23 @@ export default function ImportLeadsClient() {
     router.refresh();
   };
 
-  const handleFileUpload = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+  const handleFileUpload = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.[0];
 
-    if (!file) return;
+      if (!file) return;
 
-    const reader = new FileReader();
+      const reader = new FileReader();
 
-    reader.onload = (readerEvent) => {
-      const text = String(readerEvent.target?.result || "");
-      setCsvData(parseCSV(text));
-    };
+      reader.onload = (readerEvent) => {
+        const text = String(readerEvent.target?.result || "");
+        setCsvData(parseCSV(text));
+      };
 
-    reader.readAsText(file);
-  }, []);
+      reader.readAsText(file);
+    },
+    [],
+  );
 
   const handleDrop = useCallback((event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
@@ -409,7 +420,8 @@ export default function ImportLeadsClient() {
                 <Label>URL de la feuille Google Sheets</Label>
 
                 <p className="text-xs text-muted-foreground">
-                  Fichier → Publier sur le web → Format CSV, puis collez l&apos;URL ici
+                  Fichier → Publier sur le web → Format CSV, puis collez
+                  l&apos;URL ici
                 </p>
 
                 <Input
@@ -419,13 +431,15 @@ export default function ImportLeadsClient() {
                 />
               </div>
 
-              <Button onClick={fetchGoogleSheet} disabled={fetchingSheet || !sheetsUrl}>
+              <Button
+                onClick={fetchGoogleSheet}
+                disabled={fetchingSheet || !sheetsUrl}
+              >
                 {fetchingSheet ? (
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 ) : (
                   <Globe className="mr-2 h-4 w-4" />
                 )}
-
                 Récupérer
               </Button>
             </Card>
@@ -439,7 +453,11 @@ export default function ImportLeadsClient() {
               {csvData.headers.length} colonne(s)
             </p>
 
-            <Button variant="outline" size="sm" onClick={() => setCsvData(null)}>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setCsvData(null)}
+            >
               Changer de fichier
             </Button>
           </div>

@@ -1,28 +1,28 @@
-import { Zap, Fingerprint, MapPin, Server } from 'lucide-react';
-import SectionHeading from '../../utils/SectionHeading';
+import { Zap, Fingerprint, MapPin, Server } from "lucide-react";
+import SectionHeading from "../../utils/SectionHeading";
 
 const differentiators = [
   {
     icon: Zap,
     title: "Rapidité d'exécution",
     description:
-      'Livraison en 2 à 4 semaines. Notre méthodologie agile permet des itérations rapides sans sacrifier la qualité.',
+      "Livraison en 2 à 4 semaines. Notre méthodologie agile permet des itérations rapides sans sacrifier la qualité.",
   },
   {
     icon: Fingerprint,
-    title: '100% sur mesure',
+    title: "100% sur mesure",
     description:
-      'Aucun template. Chaque projet est conçu et développé spécifiquement pour votre activité et vos objectifs.',
+      "Aucun template. Chaque projet est conçu et développé spécifiquement pour votre activité et vos objectifs.",
   },
   {
     icon: MapPin,
-    title: 'Expertise marché local',
+    title: "Expertise marché local",
     description:
-      'Nous connaissons le tissu économique français. Nos solutions sont pensées pour votre clientèle locale.',
+      "Nous connaissons le tissu économique français. Nos solutions sont pensées pour votre clientèle locale.",
   },
   {
     icon: Server,
-    title: 'Stack technique complète',
+    title: "Stack technique complète",
     description:
       "React, Node.js, PostgreSQL — nous maîtrisons l'intégralité de la chaîne technique pour des solutions robustes.",
   },

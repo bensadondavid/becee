@@ -1,6 +1,6 @@
 import Navbar from "@/Components/Layout/NavBar";
 import Footer from "@/Components/Layout/Footer";
-import './site.css'
+import "./site.css";
 
 export default function SiteLayout({
   children,
@@ -9,9 +9,9 @@ export default function SiteLayout({
 }>) {
   return (
     <>
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
+      <Navbar />
+      <main>{children}</main>
+      <Footer />
     </>
   );
 }

@@ -6,10 +6,12 @@ const schema = z.object({
   name: z.string().min(2).max(100),
   email: z.string().email(),
   phone: z.string().max(20),
-  projectType: z.enum(['vitrine', 'reservation', 'application', 'e-commerce', 'autre', '']).optional(),
+  projectType: z
+    .enum(["vitrine", "reservation", "application", "e-commerce", "autre", ""])
+    .optional(),
   entreprise: z.string().max(100).optional(),
   message: z.string().max(5000).optional(),
-  _hp: z.literal('').optional(),
+  _hp: z.literal("").optional(),
 });
 
 const transporter = nodemailer.createTransport({
@@ -27,13 +29,20 @@ export async function POST(req: NextRequest) {
 
   const result = schema.safeParse(body);
   if (!result.success) {
-    return NextResponse.json({ error: z.flattenError(result.error) }, { status: 400 });
+    return NextResponse.json(
+      { error: z.flattenError(result.error) },
+      { status: 400 },
+    );
   }
 
   const { name, email, phone, projectType, entreprise, message } = result.data;
 
   const esc = (s: string) =>
-    s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    s
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
 
   try {
     await transporter.sendMail({

@@ -1,28 +1,43 @@
-import Link from 'next/link';
-import { Globe, CalendarCheck, Layers, ArrowRight } from 'lucide-react';
-import SectionHeading from '@/utils/SectionHeading';
+import Link from "next/link";
+import { Globe, CalendarCheck, Layers, ArrowRight } from "lucide-react";
+import SectionHeading from "@/utils/SectionHeading";
 
 const services = [
   {
     icon: Globe,
-    title: 'Site Vitrine',
+    title: "Site Vitrine",
     description:
-      'Un site professionnel qui reflète votre image et convertit vos visiteurs. Design sur mesure, SEO optimisé, performances maximales.',
-    features: ['Design personnalisé', 'Responsive mobile', 'SEO intégré', 'Formulaire de contact'],
+      "Un site professionnel qui reflète votre image et convertit vos visiteurs. Design sur mesure, SEO optimisé, performances maximales.",
+    features: [
+      "Design personnalisé",
+      "Responsive mobile",
+      "SEO intégré",
+      "Formulaire de contact",
+    ],
   },
   {
     icon: CalendarCheck,
-    title: 'Système de Réservation',
+    title: "Système de Réservation",
     description:
-      'Automatisez vos prises de rendez-vous avec un module de réservation intégré et un tableau de bord de gestion.',
-    features: ['Calendrier en ligne', 'Paiement intégré', 'Notifications SMS/email', 'Gestion multi-services'],
+      "Automatisez vos prises de rendez-vous avec un module de réservation intégré et un tableau de bord de gestion.",
+    features: [
+      "Calendrier en ligne",
+      "Paiement intégré",
+      "Notifications SMS/email",
+      "Gestion multi-services",
+    ],
   },
   {
     icon: Layers,
-    title: 'Application Métier',
+    title: "Application Métier",
     description:
-      'Des applications web sur mesure pour digitaliser et automatiser vos processus métier les plus complexes.',
-    features: ['Tableau de bord', 'Gestion des données', 'Automatisation', 'API & intégrations'],
+      "Des applications web sur mesure pour digitaliser et automatiser vos processus métier les plus complexes.",
+    features: [
+      "Tableau de bord",
+      "Gestion des données",
+      "Automatisation",
+      "API & intégrations",
+    ],
   },
 ];
 
@@ -44,7 +59,10 @@ export default function ServicesOverview() {
               style={{ animationDelay: `${i * 0.12}s` }}
             >
               <div className="mb-6 flex h-10 w-10 items-center justify-center rounded border border-[#E8E8E8]">
-                <service.icon className="h-5 w-5 text-accent" strokeWidth={1.5} />
+                <service.icon
+                  className="h-5 w-5 text-accent"
+                  strokeWidth={1.5}
+                />
               </div>
 
               <h3 className="mb-3 font-playfair text-xl font-medium text-foreground">
