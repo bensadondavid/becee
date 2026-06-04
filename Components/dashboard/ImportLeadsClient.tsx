@@ -339,7 +339,7 @@ export default function ImportLeadsClient() {
   };
 
   return (
-    <div className="max-w-3xl space-y-6">
+    <div className="max-w-3xl space-y-6 m-auto">
       <div>
         <h1 className="text-2xl font-bold tracking-tight">Import de leads</h1>
         <p className="mt-1 text-sm text-muted-foreground">

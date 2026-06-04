@@ -178,7 +178,7 @@ export default function LeadDetailClient({ lead }: { lead: Lead }) {
   };
 
   const markAsContacted = async () => {
-    const response = await fetch(`/api/leads/${lead.id}`, {
+    const response = await fetch(`/api/leads/modifiedLead/${lead.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -199,7 +199,7 @@ export default function LeadDetailClient({ lead }: { lead: Lead }) {
   };
 
   return (
-    <div className="max-w-4xl space-y-6">
+    <div className="max-w-4xl space-y-6 m-auto">
       <button
         onClick={() => router.push("/dashboard/leads")}
         className="flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"

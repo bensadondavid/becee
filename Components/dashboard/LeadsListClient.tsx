@@ -67,12 +67,24 @@ type FetchLeadsParams = {
   priority: string;
 };
 
+type LeadsResponse = {
+  data: Lead[];
+  pagination: {
+    page: number;
+    pageSize: number;
+    total: number;
+    totalPages: number;
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+  };
+};
+
 async function fetchLeads({
   page,
   search,
   status,
   priority,
-}: FetchLeadsParams): Promise<Lead[]> {
+}: FetchLeadsParams): Promise<LeadsResponse> {
   const params = new URLSearchParams();
 
   params.set("page", page.toString());
@@ -101,7 +113,7 @@ export default function LeadsListClient() {
   const priority = searchParams.get("priority") ?? "toutes";
 
   const {
-    data: leads = [],
+    data,
     isLoading,
     isError,
   } = useQuery({
@@ -117,6 +129,9 @@ export default function LeadsListClient() {
     gcTime: 1000 * 60 * 30,
     refetchOnWindowFocus: false,
   });
+
+  const leads = data?.data ?? [];
+  const pagination = data?.pagination;
 
   const updateFilter = (key: string, value: string) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -135,6 +150,30 @@ export default function LeadsListClient() {
     );
   };
 
+  const updatePage = (nextPage: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (nextPage <= 1) {
+      params.delete("page");
+    } else {
+      params.set("page", nextPage.toString());
+    }
+
+    const queryString = params.toString();
+    router.push(
+      queryString ? `/dashboard/leads?${queryString}` : "/dashboard/leads",
+    );
+  };
+
+  const paginationItems = pagination
+    ? Array.from({ length: pagination.totalPages }, (_, index) => index + 1).filter(
+        (pageNumber) =>
+          pageNumber === 1 ||
+          pageNumber === pagination.totalPages ||
+          Math.abs(pageNumber - pagination.page) <= 2,
+      )
+    : [];
+
   return (
     <div className="space-y-5">
       <div className="flex items-center justify-between">
@@ -143,17 +182,72 @@ export default function LeadsListClient() {
           <p className="mt-1 text-sm text-muted-foreground">
             {isLoading
               ? "Chargement des leads..."
-              : `${leads.length} lead${leads.length > 1 ? "s" : ""} affiché${
-                  leads.length > 1 ? "s" : ""
-                }`}
+              : pagination
+                ? `${leads.length} lead${leads.length > 1 ? "s" : ""} affiché${
+                    leads.length > 1 ? "s" : ""
+                  } sur ${pagination.total}`
+                : `${leads.length} lead${leads.length > 1 ? "s" : ""} affiché${
+                    leads.length > 1 ? "s" : ""
+                  }`}
           </p>
         </div>
 
-        <Button onClick={() => setDialogOpen(true)}>
-          <Plus className="mr-2 h-4 w-4" />
-          Nouveau lead
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button onClick={() => setDialogOpen(true)}>
+            <Plus className="mr-2 h-4 w-4" />
+            Nouveau lead
+          </Button>
+        </div>
       </div>
+
+      {pagination && pagination.totalPages > 1 && (
+        <div className="flex flex-wrap items-center gap-2">
+          <Button
+            variant="outline"
+            disabled={!pagination.hasPreviousPage || isLoading}
+            onClick={() => updatePage(pagination.page - 1)}
+          >
+            Précédent
+          </Button>
+
+          {paginationItems.map((pageNumber, index) => {
+            const previousPageNumber = paginationItems[index - 1];
+            const shouldShowEllipsis =
+              previousPageNumber && pageNumber - previousPageNumber > 1;
+
+            return (
+              <div key={pageNumber} className="flex items-center gap-2">
+                {shouldShowEllipsis && (
+                  <span className="px-1 text-sm text-muted-foreground">...</span>
+                )}
+
+                <Button
+                  variant={
+                    pageNumber === pagination.page ? "default" : "outline"
+                  }
+                  disabled={isLoading || pageNumber === pagination.page}
+                  onClick={() => updatePage(pageNumber)}
+                  className="h-9 min-w-9 px-3"
+                >
+                  {pageNumber}
+                </Button>
+              </div>
+            );
+          })}
+
+          <Button
+            variant="outline"
+            disabled={!pagination.hasNextPage || isLoading}
+            onClick={() => updatePage(pagination.page + 1)}
+          >
+            Suivant
+          </Button>
+
+          <span className="text-sm text-muted-foreground">
+            Page {pagination.page} / {pagination.totalPages}
+          </span>
+        </div>
+      )}
 
       <div className="flex flex-wrap gap-3">
         <div className="relative min-w-[200px] max-w-sm flex-1">

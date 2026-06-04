@@ -2,10 +2,10 @@ import { PrismaClient } from "./prisma/client";
 import { PrismaNeon } from "@prisma/adapter-neon";
 import "dotenv/config";
 // a utiiser pour lancer un seed
-// import { neonConfig } from "@neondatabase/serverless";
-// import ws from "ws";
+import { neonConfig } from "@neondatabase/serverless";
+import ws from "ws";
 
-// neonConfig.webSocketConstructor = ws;
+neonConfig.webSocketConstructor = ws;
 
 const createPrismaClient = () => {
   const adapter = new PrismaNeon({
