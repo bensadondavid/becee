@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export function proxy(req: NextRequest) {
-  const sessionCookie = req.cookies.get("dashboard.session_token");
+  const sessionCookie = req.cookies.get("dashboard.session_token") || req.cookies.get("__Secure-dashboard.session_token");
 
   if (!sessionCookie) {
     return NextResponse.redirect(new URL("/login", req.url));
