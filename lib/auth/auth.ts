@@ -15,7 +15,12 @@ export const auth = betterAuth({
     provider: "postgresql",
   }),
 
-  trustedOrigins: ["http://localhost:3000", process.env.BETTER_AUTH_URL!],
+  trustedOrigins: [
+    "http://localhost:3000",
+    "https://becee.fr",
+    "https://www.becee.fr",
+    "https://becee.vercel.app",
+  ],
 
   emailAndPassword: {
     enabled: true,
