@@ -29,5 +29,63 @@ export default async function LeadPage({ params }: LeadPageProps) {
     notFound();
   }
 
-  return <LeadDetailClient lead={lead} />;
+  const previousLead = await prisma.lead.findFirst({
+  where: {
+    OR: [
+      {
+        createdAt: {
+          gt: lead.createdAt,
+        },
+      },
+      {
+        createdAt: lead.createdAt,
+        id: {
+          gt: lead.id,
+        },
+      },
+    ],
+  },
+  orderBy: [
+    { createdAt: "asc" },
+    { id: "asc" },
+  ],
+  select: {
+    id: true,
+  },
+});
+
+const nextLead = await prisma.lead.findFirst({
+  where: {
+    OR: [
+      {
+        createdAt: {
+          lt: lead.createdAt,
+        },
+      },
+      {
+        createdAt: lead.createdAt,
+        id: {
+          lt: lead.id,
+        },
+      },
+    ],
+  },
+  orderBy: [
+    { createdAt: "desc" },
+    { id: "desc" },
+  ],
+  select: {
+    id: true,
+  },
+});
+
+  return (
+    <LeadDetailClient
+      lead={lead}
+      previousLeadHref={
+        previousLead ? `/dashboard/leads/${previousLead.id}` : null
+      }
+      nextLeadHref={nextLead ? `/dashboard/leads/${nextLead.id}` : null}
+    />
+  );
 }

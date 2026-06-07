@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { useQueryClient } from "@tanstack/react-query";
 import { Card } from "@/Components/ui/card";
 import { Button } from "@/Components/ui/button";
@@ -112,7 +113,15 @@ function FieldRow({
   );
 }
 
-export default function LeadDetailClient({ lead }: { lead: Lead }) {
+export default function LeadDetailClient({
+  lead,
+  previousLeadHref,
+  nextLeadHref,
+}: {
+  lead: Lead;
+  previousLeadHref?: string | null;
+  nextLeadHref?: string | null;
+}) {
   const router = useRouter();
   const queryClient = useQueryClient();
 
@@ -208,13 +217,51 @@ export default function LeadDetailClient({ lead }: { lead: Lead }) {
 
   return (
     <div className="max-w-4xl space-y-6 m-auto">
-      <button
-        onClick={() => router.push("/dashboard/leads")}
-        className="flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
-      >
-        <ArrowLeft className="h-4 w-4" />
-        Retour aux leads
-      </button>
+      <div className="flex items-center justify-between gap-3">
+        <button
+          onClick={() => router.push("/dashboard/leads")}
+          className="flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Retour aux leads
+        </button>
+
+        <div className="flex items-center gap-2">
+          {previousLeadHref ? (
+            <Link
+              href={previousLeadHref}
+              className="rounded-md border px-3 py-2 text-sm font-medium hover:bg-muted"
+            >
+              Précédent
+            </Link>
+          ) : (
+            <button
+              type="button"
+              disabled
+              className="cursor-not-allowed rounded-md border px-3 py-2 text-sm font-medium opacity-40"
+            >
+              Précédent
+            </button>
+          )}
+
+          {nextLeadHref ? (
+            <Link
+              href={nextLeadHref}
+              className="rounded-md border px-3 py-2 text-sm font-medium hover:bg-muted"
+            >
+              Suivant
+            </Link>
+          ) : (
+            <button
+              type="button"
+              disabled
+              className="cursor-not-allowed rounded-md border px-3 py-2 text-sm font-medium opacity-40"
+            >
+              Suivant
+            </button>
+          )}
+        </div>
+      </div>
 
       <div className="flex items-start justify-between">
         <div>

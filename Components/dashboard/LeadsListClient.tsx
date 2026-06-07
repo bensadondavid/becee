@@ -395,6 +395,54 @@ export default function LeadsListClient() {
           </TableBody>
         </Table>
       </div>
+      {pagination && pagination.totalPages > 1 && (
+        <div className="flex flex-wrap items-center justify-end gap-2">
+          <Button
+            variant="outline"
+            disabled={!pagination.hasPreviousPage || isLoading}
+            onClick={() => updatePage(pagination.page - 1)}
+          >
+            Précédent
+          </Button>
+
+          {paginationItems.map((pageNumber, index) => {
+            const previousPageNumber = paginationItems[index - 1];
+            const shouldShowEllipsis =
+              previousPageNumber && pageNumber - previousPageNumber > 1;
+
+            return (
+              <div key={pageNumber} className="flex items-center gap-2">
+                {shouldShowEllipsis && (
+                  <span className="px-1 text-sm text-muted-foreground">...</span>
+                )}
+
+                <Button
+                  variant={
+                    pageNumber === pagination.page ? "default" : "outline"
+                  }
+                  disabled={isLoading || pageNumber === pagination.page}
+                  onClick={() => updatePage(pageNumber)}
+                  className="h-9 min-w-9 px-3"
+                >
+                  {pageNumber}
+                </Button>
+              </div>
+            );
+          })}
+
+          <Button
+            variant="outline"
+            disabled={!pagination.hasNextPage || isLoading}
+            onClick={() => updatePage(pagination.page + 1)}
+          >
+            Suivant
+          </Button>
+
+          <span className="text-sm text-muted-foreground">
+            Page {pagination.page} / {pagination.totalPages}
+          </span>
+        </div>
+      )}
 
       <LeadFormDialog open={dialogOpen} onOpenChange={setDialogOpen} />
     </div>
