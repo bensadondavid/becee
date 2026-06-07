@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 import { Card } from "@/Components/ui/card";
 import { Button } from "@/Components/ui/button";
 import { Input } from "@/Components/ui/input";
@@ -113,6 +114,7 @@ function FieldRow({
 
 export default function LeadDetailClient({ lead }: { lead: Lead }) {
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const [editing, setEditing] = useState(false);
   const [form, setForm] = useState<LeadForm>({
@@ -157,6 +159,8 @@ export default function LeadDetailClient({ lead }: { lead: Lead }) {
       return;
     }
 
+    await queryClient.invalidateQueries({ queryKey: ["leads"] });
+
     toast.success("Lead mis à jour");
     setEditing(false);
     router.refresh();
@@ -171,6 +175,8 @@ export default function LeadDetailClient({ lead }: { lead: Lead }) {
       toast.error("Erreur lors de la suppression");
       return;
     }
+
+    await queryClient.invalidateQueries({ queryKey: ["leads"] });
 
     toast.success("Lead supprimé");
     router.push("/dashboard/leads");
@@ -193,6 +199,8 @@ export default function LeadDetailClient({ lead }: { lead: Lead }) {
       toast.error("Erreur lors de la mise à jour");
       return;
     }
+
+    await queryClient.invalidateQueries({ queryKey: ["leads"] });
 
     toast.success("Lead marqué comme contacté");
     router.refresh();
