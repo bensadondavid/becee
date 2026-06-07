@@ -99,13 +99,6 @@ export default function LoginForm() {
         <div className="space-y-1.5">
           <div className="flex items-center justify-between">
             <Label htmlFor="password">Mot de passe</Label>
-
-            <Link
-              href="/forgot-password"
-              className="text-xs text-primary hover:underline"
-            >
-              Mot de passe oublié ?
-            </Link>
           </div>
 
           <div className="relative">
