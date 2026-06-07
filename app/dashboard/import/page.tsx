@@ -1,4 +1,4 @@
-import ImportLeadsClient from "@/Components/dashboard/ImportLeadsClient";
+import { ImportLeadsClient } from "@/Components/dashboard/ImportLeadsClient";
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth/auth";
 import { headers } from "next/headers";
