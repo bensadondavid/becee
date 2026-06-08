@@ -2,29 +2,17 @@
 
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/Components/ui/table";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import {Table,TableBody,TableCell,TableHead,TableHeader,TableRow,} from "@/Components/ui/table";
 import { Input } from "@/Components/ui/input";
 import { Button } from "@/Components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/Components/ui/select";
+import {Select,SelectContent,SelectItem,SelectTrigger,SelectValue,} from "@/Components/ui/select";
 import { StatusBadge, PriorityBadge } from "@/Components/leads/StatusBadge";
 import LeadFormDialog from "@/Components/leads/LeadFormDialog";
 import { Plus, Search } from "lucide-react";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
+import { toast } from "sonner";
 
 const STATUSES = [
   { value: "tous", label: "Tous" },
@@ -39,6 +27,8 @@ const STATUSES = [
   { value: "DEVIS_ENVOYE", label: "Devis envoyé" },
   { value: "CONTRAT_SIGNE", label: "Contrat signé" },
 ];
+
+const LEAD_STATUSES = STATUSES.filter((status) => status.value !== "tous");
 
 const PRIORITIES = [
   { value: "toutes", label: "Toutes" },
@@ -105,6 +95,7 @@ async function fetchLeads({
 export default function LeadsListClient() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const queryClient = useQueryClient();
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const page = Number(searchParams.get("page")) || 1;
@@ -112,11 +103,7 @@ export default function LeadsListClient() {
   const status = searchParams.get("status") ?? "tous";
   const priority = searchParams.get("priority") ?? "toutes";
 
-  const {
-    data,
-    isLoading,
-    isError,
-  } = useQuery({
+  const { data,isLoading,isError } = useQuery({
     queryKey: ["leads", page, search, status, priority],
     queryFn: () =>
       fetchLeads({
@@ -132,6 +119,24 @@ export default function LeadsListClient() {
 
   const leads = data?.data ?? [];
   const pagination = data?.pagination;
+
+  const handleStatusChange = async (leadId: string, newStatus: string) => {
+    const response = await fetch(`/api/leads/modifiedLead/${leadId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ status: newStatus }),
+    });
+
+    if (!response.ok) {
+      toast.error("Erreur lors de la mise à jour du statut");
+      return;
+    }
+
+    await queryClient.invalidateQueries({ queryKey: ["leads"] });
+    toast.success("Statut mis à jour");
+  };
 
   const updateFilter = (key: string, value: string) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -375,8 +380,29 @@ export default function LeadsListClient() {
                     })}
                   </TableCell>
 
-                  <TableCell>
-                    <StatusBadge status={lead.status} />
+                  <TableCell onClick={(event) => event.stopPropagation()}>
+                    <Select
+                      value={lead.status}
+                      onValueChange={(value) =>
+                        handleStatusChange(lead.id, value)
+                      }
+                    >
+                      <SelectTrigger className="h-8 w-auto border-none bg-transparent p-0 shadow-none [&>svg]:ml-1.5">
+                        <SelectValue>
+                          <StatusBadge status={lead.status} />
+                        </SelectValue>
+                      </SelectTrigger>
+                      <SelectContent>
+                        {LEAD_STATUSES.map((leadStatus) => (
+                          <SelectItem
+                            key={leadStatus.value}
+                            value={leadStatus.value}
+                          >
+                            {leadStatus.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </TableCell>
 
                   <TableCell>

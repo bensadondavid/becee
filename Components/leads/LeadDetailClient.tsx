@@ -28,7 +28,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/Components/ui/alert-dialog";
-import { ArrowLeft, Pencil, Trash2, Phone, Save, X } from "lucide-react";
+import { ArrowLeft, Trash2, Phone, Save } from "lucide-react";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { toast } from "sonner";
@@ -93,11 +93,6 @@ function toDateInputValue(date: Date | null) {
   return new Date(date).toISOString().split("T")[0];
 }
 
-function formatMoney(value: number | null) {
-  if (!value) return "—";
-  return `${value.toLocaleString("fr-FR")} €`;
-}
-
 function FieldRow({
   label,
   children,
@@ -125,7 +120,6 @@ export default function LeadDetailClient({
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const [editing, setEditing] = useState(false);
   const [form, setForm] = useState<LeadForm>({
     contactName: lead.contactName,
     companyName: lead.companyName || "",
@@ -171,7 +165,6 @@ export default function LeadDetailClient({
     await queryClient.invalidateQueries({ queryKey: ["leads"] });
 
     toast.success("Lead mis à jour");
-    setEditing(false);
     router.refresh();
   };
 
@@ -285,72 +278,48 @@ export default function LeadDetailClient({
         </div>
 
         <div className="flex gap-2">
-          {!editing ? (
-            <>
-              {lead.status === "LEAD_FRAIS" && (
-                <Button variant="outline" size="sm" onClick={markAsContacted}>
-                  <Phone className="mr-1.5 h-4 w-4" />
-                  Marquer contacté
-                </Button>
-              )}
-
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setEditing(true)}
-              >
-                <Pencil className="mr-1.5 h-4 w-4" />
-                Modifier
-              </Button>
-
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="text-destructive hover:text-destructive"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                </AlertDialogTrigger>
-
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>Supprimer ce lead ?</AlertDialogTitle>
-                    <AlertDialogDescription>
-                      Cette action est irréversible.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Annuler</AlertDialogCancel>
-                    <AlertDialogAction
-                      onClick={handleDelete}
-                      className="bg-destructive text-destructive-foreground"
-                    >
-                      Supprimer
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
-            </>
-          ) : (
-            <>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setEditing(false)}
-              >
-                <X className="mr-1.5 h-4 w-4" />
-                Annuler
-              </Button>
-
-              <Button size="sm" onClick={handleSave}>
-                <Save className="mr-1.5 h-4 w-4" />
-                Enregistrer
-              </Button>
-            </>
+          {lead.status === "LEAD_FRAIS" && (
+            <Button variant="outline" size="sm" onClick={markAsContacted}>
+              <Phone className="mr-1.5 h-4 w-4" />
+              Marquer contacté
+            </Button>
           )}
+
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button
+                variant="outline"
+                size="sm"
+                className="text-destructive hover:text-destructive"
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            </AlertDialogTrigger>
+
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Supprimer ce lead ?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Cette action est irréversible.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+
+              <AlertDialogFooter>
+                <AlertDialogCancel>Annuler</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={handleDelete}
+                  className="bg-destructive text-destructive-foreground"
+                >
+                  Supprimer
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+
+          <Button size="sm" onClick={handleSave}>
+            <Save className="mr-1.5 h-4 w-4" />
+            Enregistrer
+          </Button>
         </div>
       </div>
 
@@ -359,47 +328,31 @@ export default function LeadDetailClient({
           <h3 className="mb-3 text-sm font-semibold">Contact</h3>
 
           <FieldRow label="Nom">
-            {editing ? (
-              <Input
-                value={form.contactName}
-                onChange={(e) => handleChange("contactName", e.target.value)}
-              />
-            ) : (
-              <span className="text-sm">{lead.contactName}</span>
-            )}
+            <Input
+              value={form.contactName}
+              onChange={(e) => handleChange("contactName", e.target.value)}
+            />
           </FieldRow>
 
           <FieldRow label="Téléphone">
-            {editing ? (
-              <Input
-                value={form.phone}
-                onChange={(e) => handleChange("phone", e.target.value)}
-              />
-            ) : (
-              <span className="text-sm">{lead.phone || "—"}</span>
-            )}
+            <Input
+              value={form.phone}
+              onChange={(e) => handleChange("phone", e.target.value)}
+            />
           </FieldRow>
 
           <FieldRow label="Email">
-            {editing ? (
-              <Input
-                value={form.email}
-                onChange={(e) => handleChange("email", e.target.value)}
-              />
-            ) : (
-              <span className="text-sm">{lead.email || "—"}</span>
-            )}
+            <Input
+              value={form.email}
+              onChange={(e) => handleChange("email", e.target.value)}
+            />
           </FieldRow>
 
           <FieldRow label="Ville">
-            {editing ? (
-              <Input
-                value={form.city}
-                onChange={(e) => handleChange("city", e.target.value)}
-              />
-            ) : (
-              <span className="text-sm">{lead.city || "—"}</span>
-            )}
+            <Input
+              value={form.city}
+              onChange={(e) => handleChange("city", e.target.value)}
+            />
           </FieldRow>
         </Card>
 
@@ -407,34 +360,17 @@ export default function LeadDetailClient({
           <h3 className="mb-3 text-sm font-semibold">Entreprise</h3>
 
           <FieldRow label="Nom">
-            {editing ? (
-              <Input
-                value={form.companyName}
-                onChange={(e) => handleChange("companyName", e.target.value)}
-              />
-            ) : (
-              <span className="text-sm">{lead.companyName || "—"}</span>
-            )}
+            <Input
+              value={form.companyName}
+              onChange={(e) => handleChange("companyName", e.target.value)}
+            />
           </FieldRow>
 
           <FieldRow label="Site web">
-            {editing ? (
-              <Input
-                value={form.website}
-                onChange={(e) => handleChange("website", e.target.value)}
-              />
-            ) : lead.website ? (
-              <a
-                href={lead.website}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-primary hover:underline"
-              >
-                {lead.website}
-              </a>
-            ) : (
-              <span className="text-sm">—</span>
-            )}
+            <Input
+              value={form.website}
+              onChange={(e) => handleChange("website", e.target.value)}
+            />
           </FieldRow>
         </Card>
 
@@ -442,28 +378,18 @@ export default function LeadDetailClient({
           <h3 className="mb-3 text-sm font-semibold">Projet</h3>
 
           <FieldRow label="Type produit">
-            {editing ? (
-              <Input
-                value={form.productType}
-                onChange={(e) => handleChange("productType", e.target.value)}
-              />
-            ) : (
-              <span className="text-sm">{lead.productType || "—"}</span>
-            )}
+            <Input
+              value={form.productType}
+              onChange={(e) => handleChange("productType", e.target.value)}
+            />
           </FieldRow>
 
           <FieldRow label="Valeur potentielle">
-            {editing ? (
-              <Input
-                type="number"
-                value={form.potentialValue}
-                onChange={(e) => handleChange("potentialValue", e.target.value)}
-              />
-            ) : (
-              <span className="text-sm">
-                {formatMoney(lead.potentialValue)}
-              </span>
-            )}
+            <Input
+              type="number"
+              value={form.potentialValue}
+              onChange={(e) => handleChange("potentialValue", e.target.value)}
+            />
           </FieldRow>
         </Card>
 
@@ -471,98 +397,66 @@ export default function LeadDetailClient({
           <h3 className="mb-3 text-sm font-semibold">Suivi</h3>
 
           <FieldRow label="Commercial">
-            {editing ? (
-              <Input
-                value={form.assignedTo}
-                onChange={(e) => handleChange("assignedTo", e.target.value)}
-              />
-            ) : (
-              <span className="text-sm">{lead.assignedTo || "—"}</span>
-            )}
+            <Input
+              value={form.assignedTo}
+              onChange={(e) => handleChange("assignedTo", e.target.value)}
+            />
           </FieldRow>
 
           <FieldRow label="Statut">
-            {editing ? (
-              <Select
-                value={form.status}
-                onValueChange={(value) => handleChange("status", value)}
-              >
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {STATUSES.map((status) => (
-                    <SelectItem key={status.value} value={status.value}>
-                      {status.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            ) : (
-              <StatusBadge status={lead.status} />
-            )}
+            <Select
+              value={form.status}
+              onValueChange={(value) => handleChange("status", value)}
+            >
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {STATUSES.map((status) => (
+                  <SelectItem key={status.value} value={status.value}>
+                    {status.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </FieldRow>
 
           <FieldRow label="Priorité">
-            {editing ? (
-              <Select
-                value={form.priority}
-                onValueChange={(value) => handleChange("priority", value)}
-              >
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {PRIORITIES.map((priority) => (
-                    <SelectItem key={priority.value} value={priority.value}>
-                      {priority.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            ) : (
-              <PriorityBadge priority={lead.priority} />
-            )}
+            <Select
+              value={form.priority}
+              onValueChange={(value) => handleChange("priority", value)}
+            >
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {PRIORITIES.map((priority) => (
+                  <SelectItem key={priority.value} value={priority.value}>
+                    {priority.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </FieldRow>
 
           <FieldRow label="Dernier contact">
-            {editing ? (
-              <Input
-                type="date"
-                value={form.lastContactDate}
-                onChange={(e) =>
-                  handleChange("lastContactDate", e.target.value)
-                }
-              />
-            ) : (
-              <span className="text-sm">
-                {lead.lastContactDate
-                  ? format(new Date(lead.lastContactDate), "d MMM yyyy", {
-                      locale: fr,
-                    })
-                  : "—"}
-              </span>
-            )}
+            <Input
+              type="date"
+              value={form.lastContactDate}
+              onChange={(e) =>
+                handleChange("lastContactDate", e.target.value)
+              }
+            />
           </FieldRow>
 
           <FieldRow label="Prochain suivi">
-            {editing ? (
-              <Input
-                type="date"
-                value={form.nextFollowupDate}
-                onChange={(e) =>
-                  handleChange("nextFollowupDate", e.target.value)
-                }
-              />
-            ) : (
-              <span className="text-sm">
-                {lead.nextFollowupDate
-                  ? format(new Date(lead.nextFollowupDate), "d MMM yyyy", {
-                      locale: fr,
-                    })
-                  : "—"}
-              </span>
-            )}
+            <Input
+              type="date"
+              value={form.nextFollowupDate}
+              onChange={(e) =>
+                handleChange("nextFollowupDate", e.target.value)
+              }
+            />
           </FieldRow>
 
           <FieldRow label="Date entrée">
@@ -576,18 +470,12 @@ export default function LeadDetailClient({
       <Card className="p-5">
         <h3 className="mb-3 text-sm font-semibold">Notes</h3>
 
-        {editing ? (
-          <Textarea
-            value={form.notes}
-            onChange={(e) => handleChange("notes", e.target.value)}
-            rows={5}
-            placeholder="Ajouter des notes..."
-          />
-        ) : (
-          <p className="whitespace-pre-wrap text-sm text-muted-foreground">
-            {lead.notes || "Aucune note"}
-          </p>
-        )}
+        <Textarea
+          value={form.notes}
+          onChange={(e) => handleChange("notes", e.target.value)}
+          rows={5}
+          placeholder="Ajouter des notes..."
+        />
       </Card>
     </div>
   );
