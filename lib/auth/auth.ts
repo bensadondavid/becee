@@ -2,6 +2,7 @@ import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "../database/prisma";
 import { resend } from "../mail/resend";
+import { passkey } from '@better-auth/passkey'
 
 export const auth = betterAuth({
   baseURL: process.env.BETTER_AUTH_URL!,
@@ -108,6 +109,9 @@ export const auth = betterAuth({
     expiresIn: 60 * 60 * 24 * 7, // 7 jours
     updateAge: 60 * 60 * 24, // 1 jour
   },
+  plugins:[
+    passkey()
+  ]
 });
 
 // pnpm dlx auth@latest generate --adapter prisma si jamais le generate auto ne marche pas pour config les tables auto ou // pnpm dlx auth@latest generate --config ./lib/auth.ts

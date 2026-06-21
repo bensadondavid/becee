@@ -3,7 +3,7 @@
 import { authClient } from "@/lib/auth/auth-client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Users, Upload, LogOut, Menu, X } from "lucide-react";
+import { LayoutDashboard, Users, Upload, LogOut, Menu, X, Settings } from "lucide-react";
 import Image from "next/image";
 
 import { useState } from "react";
@@ -12,6 +12,7 @@ const navItems = [
   { label: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
   { label: "Leads", path: "/dashboard/leads", icon: Users },
   { label: "Import", path: "/dashboard/import", icon: Upload },
+  { label : "Paramètres", path: '/dashboard/parametres', icon: Settings}
 ];
 
 export default function Sidebar() {
