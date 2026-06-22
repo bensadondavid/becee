@@ -47,3 +47,8 @@ export type AllowedUser = Prisma.AllowedUserModel
  * 
  */
 export type Lead = Prisma.LeadModel
+/**
+ * Model Passkey
+ * 
+ */
+export type Passkey = Prisma.PasskeyModel

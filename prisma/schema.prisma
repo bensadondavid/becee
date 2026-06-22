@@ -23,6 +23,8 @@ model User {
   sessions      Session[]
   accounts      Account[]
 
+  passkeys Passkey[]
+
   @@unique([email])
   @@map("user")
 }
@@ -126,4 +128,23 @@ model Lead {
   @@index([priority])
   @@index([createdAt])
   @@index([nextFollowupDate])
+}
+
+model Passkey {
+  id           String    @id
+  name         String?
+  publicKey    String
+  userId       String
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  credentialID String
+  counter      Int
+  deviceType   String
+  backedUp     Boolean
+  transports   String?
+  createdAt    DateTime?
+  aaguid       String?
+
+  @@index([userId])
+  @@index([credentialID])
+  @@map("passkey")
 }
