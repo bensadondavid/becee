@@ -10,6 +10,7 @@ import { Label } from "@/Components/ui/label";
 import { Mail, Lock, Loader2 } from "lucide-react";
 import GoogleIcon from "@/Components/ui/GoogleIcon";
 import { Fingerprint } from "lucide-react";
+import { toast } from "sonner";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -49,7 +50,11 @@ export default function LoginForm() {
   };
 
   const handlePasskey = async()=>{
-    await authClient.signIn.passkey()
+    const result = await authClient.signIn.passkey()
+    if(result.error){
+      toast.error('passkey non trouvée')
+    }
+    router.push('/dashboard')
   }
 
   return (
