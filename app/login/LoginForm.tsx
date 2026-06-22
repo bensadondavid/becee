@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import AuthLayout from "@/Components/Layout/AuthLayout";
 import { authClient } from "@/lib/auth/auth-client";
@@ -10,6 +9,7 @@ import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
 import { Mail, Lock, Loader2 } from "lucide-react";
 import GoogleIcon from "@/Components/ui/GoogleIcon";
+import { Fingerprint } from "lucide-react";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -48,6 +48,10 @@ export default function LoginForm() {
     });
   };
 
+  const handlePasskey = async()=>{
+    await authClient.signIn.passkey()
+  }
+
   return (
     <AuthLayout title="Connexion">
       <Button
@@ -59,6 +63,17 @@ export default function LoginForm() {
         <GoogleIcon className="w-4 h-4 mr-2" />
         Continuer avec Google
       </Button>
+
+      <Button
+        variant="outline"
+        className="w-full h-11 text-sm font-medium mb-5"
+        onClick={handlePasskey}
+        type="button"
+      >
+        <Fingerprint className="w-4 h-4 mr-2" />
+        Se connecter avec une passkey
+      </Button>
+
 
       <div className="relative mb-5">
         <div className="absolute inset-0 flex items-center">
