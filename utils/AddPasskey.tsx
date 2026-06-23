@@ -11,6 +11,7 @@ export default function AddPasskey (){
         authenticatorAttachment: "platform",
         });
         if(error){
+            console.log(error)
            return toast.error("Erreur lors de la création d'une passkey")
         }
         toast.success('Passkey créée')
